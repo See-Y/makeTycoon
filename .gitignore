@@ -31,3 +31,59 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Flutter 관련 파일
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# 빌드 아티팩트
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# macOS 빌드 관련
+macos/Flutter/ephemeral/
+
+# Android 관련 파일
+*.iml
+.gradle/
+.idea/
+local.properties
+
+# Xcode 관련 파일
+xcuserdata/
+DerivedData/
+*.xcworkspace
+
+# 코코아팟 캐시
+Pods/
+Podfile.lock
+
+# Web 빌드 아티팩트
+web/.dart_tool/
+web/.flutter-plugins-dependencies
+
+# VSCode 설정 파일 (필요 시 추가)
+.vscode/
+*.code-workspace
+
+# Byte-compiled / Cache files
+*.class
+*.log
+*.pyc
+*.pyo
+*.swp
+*.DS_Store
+
+# IDE 파일
+*.idea/
+*.iml
+
+# Personal Settings
+*.swp
+*.swo
+

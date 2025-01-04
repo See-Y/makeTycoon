@@ -51,8 +51,6 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
       return;
     }
 
-    // 1주차부터 시작
-    log("button clicked", name: 'week');
     _navigateToWeekScreen(context);
   }
 
@@ -60,7 +58,6 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
     final manager = MonthlyDataManager();
     final week = GameManager().currentWeek;
     final activity = manager.getWeeklyActivity(week - 1); // 주차는 0부터 저장
-    log("activity selected: ${activity}", name: 'week');
 
     // 현재 주차의 활동에 따라 이동
     if (activity == "공연") {

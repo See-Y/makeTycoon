@@ -7,14 +7,19 @@ import '../month/month_main_screen.dart';
 class BandNameScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
+    // 화면 크기 가져오기
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text('밴드 이름 설정'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -24,6 +29,7 @@ class BandNameScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
+
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(
@@ -32,6 +38,7 @@ class BandNameScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+
             ElevatedButton(
               onPressed: () {
                 final bandName = _nameController.text.trim();

@@ -11,19 +11,37 @@ import 'package:provider/provider.dart';
 import '../../models/band.dart';
 import '../../providers/band_provider.dart'; // band_provider import
 
+
 class MonthMainScreen extends StatelessWidget {
   const MonthMainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Band bandModel = Provider.of<BandProvider>(context).band;
+
     return PopScope(
       canPop: false, // 뒤로가기 비활성화
       child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('돈: \$${bandModel.money} 팬: ${bandModel.fans}명'),
+              IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settings');
+                },
+              ),
+            ],
+          ),
+        ),
         body: PageView(
+          controller: PageController(initialPage: 1),  // 시작 페이지를 1로 설정
           children: [
-            const _MonthCycleMain(),
-            const MemberStatsScreen(),
-            const InstrumentStatsScreen(),
+            MemberStatsScreen(),  // 왼쪽으로 스와이프하면 악기 스탯 화면
+            _MonthCycleMain(),
+            InstrumentStatsScreen(),  // 오른쪽으로 스와이프하면 멤버 스탯 화면
           ],
         ),
       ),

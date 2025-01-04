@@ -17,10 +17,10 @@ class GameStartScreen extends StatelessWidget {
         children: [
           _buildStatusBar(), // 돈과 팬 수를 표시하는 상단 바
           _buildButtons(context), // 처음부터/계속하기 버튼
-          ElevatedButton(
-          onPressed: () => Navigator.pushNamed(context, '/monthly-cycle'),
-          child: const Text('게임 시작'),
-          ),
+          // ElevatedButton(
+          // onPressed: () => Navigator.pushNamed(context, '/monthly-cycle'),
+          // child: const Text('게임 시작'),
+          // ),
         ],
        ),
       ),

@@ -40,7 +40,7 @@ class BandSimulationApp extends StatelessWidget {
         '/band-name': (context) => BandNameScreen(),
         //'/settings': (context) => const SettingsScreen(),
         '/monthly-cycle': (context) => const MonthMainScreen(),
-        '/member-stats': (context) => const MemberStatsScreen(),
+        '/member-stats': (context) => MemberStatsScreen(),
         '/instrument-stats': (context) => const InstrumentStatsScreen(),
         '/week-performance': (context) => const WeekPerformanceScreen(),
         '/week-album': (context) => const WeekAlbumScreen(),

@@ -10,6 +10,7 @@ class GameStartScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Game Start'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
           child: ElevatedButton(

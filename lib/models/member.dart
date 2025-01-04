@@ -1,11 +1,12 @@
 import '../models/leader_effect.dart';
 import '../models/effect_target.dart';
 import '../models/effect_type.dart';
+import 'instrument.dart';
 
 class Member {
   final String name;
   final String animalType;
-  final String instrument;
+  Instrument instrument;
   int level;
   List<int> stats; // [관종, 똘끼, 깡, 스껄]
   final List<int> mbti; // [I/E, S/N, T/F, P/J]
@@ -65,7 +66,7 @@ class Member {
 
   @override
   String toString() {
-    return "이름: $name, 동물: $animalType, 악기: $instrument, "
+    return "이름: $name, 동물: $animalType, 악기: ${instrument.name}, "
         "스탯: $adjustedStats (기본 스탯: $stats), "
         "MBTI: $mbti, "
         "리더 효과 1: $leaderEffect1, 리더 효과 2: $leaderEffect2, "

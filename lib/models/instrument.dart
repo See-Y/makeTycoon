@@ -1,20 +1,24 @@
+import '../data/instrument_effect_data.dart';
+
 class Instrument {
-  final String name;
-  final String type; // 예: "기타", "드럼"
-  int level;
-  String rarity; // 예: "레어", "전설"
-  double successRate; // 강화 성공 확률
+  final String name; // 악기 이름
+  String rarity; // 희귀도: 일반 → 신화
+  Map<String, double> effects; // 공연 및 음반 효과
 
   Instrument({
     required this.name,
-    required this.type,
-    this.level = 1,
-    this.rarity = "일반",
-    this.successRate = 0.8,
-  });
+    this.rarity = '일반',
+  }) : effects = Map<String, double>.from(instrumentEffects['일반']!);
 
-  void upgrade() {
-    successRate *= 0.9; // 레벨업 시 성공률 감소
-    level++;
+  // 희귀도에 따라 효과 업데이트
+  void updateEffects() {
+    if (instrumentEffects.containsKey(rarity)) {
+      effects = Map<String, double>.from(instrumentEffects[rarity]!);
+    }
+  }
+
+  @override
+  String toString() {
+    return "악기: $name, 희귀도: $rarity, 효과: $effects";
   }
 }

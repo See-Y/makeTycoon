@@ -19,6 +19,7 @@ class MemberStatsScreen extends StatelessWidget {
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       ),
       body: PageView.builder(
+        scrollDirection: Axis.vertical, // 스크롤 방향을 세로로 변경
         itemCount: band.members.length,
         itemBuilder: (context, index) {
           final member = band.members[index];

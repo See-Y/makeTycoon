@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:make_tycoon/models/instrument.dart';
+import '../data/instrument_enhance_data.dart';
+import '../logic/instrument_enhance_logic.dart';
 import '../models/band.dart';
 import '../models/member.dart';
 import '../logic/member_creation_logic.dart';
@@ -8,7 +11,7 @@ import '../logic/approval_logic.dart';
 class BandProvider with ChangeNotifier {
   Band _band = Band(
     name: '새로운 밴드',
-    leader: MemberCreationLogic.createMember("보컬", true),
+    leader: MemberCreationLogic.createMember(Instrument(name: "보컬"), true),
     members: [],
     albums: [],
     fans: 0,
@@ -20,7 +23,7 @@ class BandProvider with ChangeNotifier {
   /// 밴드 초기화
   void initializeBand() {
     // 1. 필수 멤버: 보컬 생성
-    final vocal = MemberCreationLogic.createMember("보컬", true);
+    final vocal = MemberCreationLogic.createMember(Instrument(name: "보컬"), true);
 
     // 2. 나머지 악기 목록
     final remainingInstruments = ["기타", "베이스", "드럼", "키보드"];
@@ -32,7 +35,7 @@ class BandProvider with ChangeNotifier {
 
     // 4. 선택된 악기로 멤버 생성
     final additionalMembers = selectedInstruments
-        .map((instrument) => MemberCreationLogic.createMember(instrument, false))
+        .map((instrument) => MemberCreationLogic.createMember(Instrument(name: instrument), false))
         .toList();
 
     // 5. 밴드 구성
@@ -103,5 +106,26 @@ class BandProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // 악기 강화 메서드
+  String enhanceInstrument(Member member, Instrument instrument) {
+    final upgradeCost = instrumentEnhanceCosts[instrument.rarity]!;
+    final message = InstrumentEnhanceLogic.enhanceInstrument(
+      member,
+      instrument,
+      _band.money,
+    );
+
+    if (!message.contains("돈이 부족합니다")) {
+      // 강화 성공 또는 실패: 밴드 돈 차감
+      _band.money -= upgradeCost;
+
+      // 상태 변경 반영
+      notifyListeners();
+    }
+
+    return message;
+  }
+
 
 }

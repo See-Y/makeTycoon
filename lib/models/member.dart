@@ -1,11 +1,13 @@
+import '../models/leader_effect.dart';
+
 class Member {
   final String name;
   final String animalType;
   final String instrument;
   final List<int> stats; // [관종, 똘끼, 깡, 스껄]
   final List<int> mbti; // [-100 ~ 100 벡터]
-  final Map<Member, int> supportRatings; // 다른 멤버에 대한 지지율
-  int approvalRating;
+  final LeaderEffect leaderEffect1; // 리더 패시브 효과 1
+  final LeaderEffect leaderEffect2; // 리더 패시브 효과 2
 
   Member({
     required this.name,
@@ -13,18 +15,14 @@ class Member {
     required this.instrument,
     required this.stats,
     required this.mbti,
-    this.approvalRating = 0,
-  }) : supportRatings = {};
+    required this.leaderEffect1,
+    required this.leaderEffect2,
+  });
 
-  double calculateAverageSupport(List<Member> allMembers) {
-    final ratingsTowardsMe = allMembers
-        .where((member) => member.supportRatings.containsKey(this))
-        .map((member) => member.supportRatings[this]!)
-        .toList();
-
-    if (ratingsTowardsMe.isEmpty) return 0.0;
-
-    final totalSupport = ratingsTowardsMe.reduce((a, b) => a + b);
-    return totalSupport / ratingsTowardsMe.length;
+  @override
+  String toString() {
+    return "이름: $name, 동물: $animalType, 악기: $instrument, "
+        "스탯: $stats, MBTI: $mbti, "
+        "리더 효과 1: $leaderEffect1, 리더 효과 2: $leaderEffect2";
   }
 }

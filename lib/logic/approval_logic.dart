@@ -19,7 +19,7 @@ class ApprovalLogic {
         } else if (member == other) {
           member.approvalRatings[other] = 0; // 자기 자신에 대한 지지율 0
         } else {
-          member.approvalRatings[other] = Random().nextInt(6) as double; // 0~5 랜덤 지지율
+          member.approvalRatings[other] = Random().nextInt(6); // 0~5 랜덤 지지율
         }
       }
     }
@@ -36,7 +36,7 @@ class ApprovalLogic {
           .where((value) => value != null)
           .reduce((a, b) => a + b) ~/
           member.approvalRatings.length;
-      newMember.approvalRatings[member] = averageApproval.toDouble();
+      newMember.approvalRatings[member] = averageApproval;
     }
 
     // 새 멤버 자신에 대한 지지율

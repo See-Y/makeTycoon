@@ -82,4 +82,26 @@ class BandProvider with ChangeNotifier {
     _band.members.remove(member);
     notifyListeners();
   }
+
+  void updateMoney(int newMoney){
+    _band.money = newMoney;
+    notifyListeners();
+  }
+
+  void updateMemberStats(Member member, List<int> updatedStats) {
+    final index = _band.members.indexOf(member);
+    if (index != -1) {
+      _band.members[index].stats.setAll(0, updatedStats);
+      notifyListeners();
+    }
+  }
+
+  void incrementMemberLevel(Member member) {
+    final index = _band.members.indexOf(member);
+    if (index != -1) {
+      _band.members[index].level += 1;
+      notifyListeners();
+    }
+  }
+
 }

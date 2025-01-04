@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'game_manager.dart'; // GameManager 추가
 import 'package:provider/provider.dart';
+import 'providers/band_provider.dart';
 
 // Screens
+import 'models/member.dart';
 import 'screens/game_start/game_start_screen.dart';
 import 'screens/month/month_main_screen.dart';
 import 'screens/month/member_stats_screen.dart';
@@ -15,7 +17,7 @@ import 'screens/quarter/quarter_main_screen.dart';
 import 'screens/quarter/member_removal_screen.dart';
 import 'screens/quarter/member_recruitment_screen.dart';
 import 'screens/game_start/band_name_screen.dart';
-import 'providers/band_provider.dart';
+import 'package:make_tycoon/screens/month/member_level_up_screen.dart';
 
 
 void main() {
@@ -39,6 +41,10 @@ class BandSimulationApp extends StatelessWidget {
         //'/settings': (context) => const SettingsScreen(),
         '/monthly-cycle': (context) => const MonthMainScreen(),
         '/member-stats': (context) => MemberStatsScreen(),
+        '/level-up': (context) {
+          final member = ModalRoute.of(context)!.settings.arguments as Member;
+          return MemberLevelUpScreen(member: member);
+        },
         '/instrument-stats': (context) => const InstrumentStatsScreen(),
         '/week-performance': (context) => const WeekPerformanceScreen(),
         '/week-album': (context) => const WeekAlbumScreen(),

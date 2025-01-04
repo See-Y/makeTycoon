@@ -6,23 +6,25 @@ class Member {
   final String name;
   final String animalType;
   final String instrument;
-  final List<int> stats; // [관종, 똘끼, 깡, 스껄]
-  final List<int> mbti; // [-100 ~ 100 벡터]
+  int level;
+  List<int> stats; // [관종, 똘끼, 깡, 스껄]
+  final List<int> mbti; // [I/E, S/N, T/F, P/J]
   final LeaderEffect leaderEffect1; // 리더 패시브 효과 1
   final LeaderEffect leaderEffect2; // 리더 패시브 효과 2
   bool isLeader; // 리더 여부
-  final Map<Member, double> approvalRatings; // 다른 멤버들에 대한 지지율
+  Map<Member, int> approvalRatings; // 다른 멤버들에 대한 지지율
 
   Member({
     required this.name,
     required this.animalType,
     required this.instrument,
+    this.level = 1,
     required this.stats,
     required this.mbti,
     required this.leaderEffect1,
     required this.leaderEffect2,
     this.isLeader = false,
-    Map<Member, double>? approvalRatings,
+    Map<Member, int>? approvalRatings,
   }) : approvalRatings = approvalRatings ?? {};
 
   // 스탯 Getter: 리더 효과가 적용된 값을 반환

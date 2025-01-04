@@ -7,7 +7,8 @@ class WeekPerformanceScreen extends StatelessWidget {
   const WeekPerformanceScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return GlobalWrapper(
+  Widget build(BuildContext context) {
+    return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
           title: Text('${GameManager().currentMonth}주차: 공연'),

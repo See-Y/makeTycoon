@@ -16,7 +16,7 @@ class MemberCreationLogic {
   }
 
   // 멤버 생성
-  static Member createMember(String instrument) {
+  static Member createMember(String instrument, bool isLeader) {
     final data = getMemberData(instrument);
 
     final random = Random();
@@ -36,6 +36,7 @@ class MemberCreationLogic {
       instrument: data["instrument"],
       stats: stats,
       mbti: mbti,
+      isLeader: isLeader,
       leaderEffect1: data["leaderEffect1"],
       leaderEffect2: data["leaderEffect2"],
     );

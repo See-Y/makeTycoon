@@ -6,6 +6,11 @@ import 'instrument_stats_screen.dart';
 import '../../logic/monthly_data_manager.dart';
 import '../../game_manager.dart';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/band.dart';
+import '../../providers/band_provider.dart'; // band_provider import
+
 class MonthMainScreen extends StatelessWidget {
   const MonthMainScreen({super.key});
 

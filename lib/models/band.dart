@@ -1,14 +1,17 @@
+import 'package:flutter/cupertino.dart';
+
 import 'album.dart';
 import 'instrument.dart';
 import 'member.dart';
 
-class Band {
-  final String name;
+class Band with ChangeNotifier{
+  String name;
   Member leader;
   List<Member> members;
   List<Album> albums;
   int fans;
   int money;
+
 
   Band({
     required this.name,
@@ -18,6 +21,8 @@ class Band {
     this.fans = 0,
     this.money = 0,
   });
+
+
 
   void addMember(Member member) {
     members.add(member);
@@ -29,5 +34,15 @@ class Band {
 
   void addAlbum(Album album) {
     albums.add(album);
+  }
+
+  void updateMoney(int amount) {
+    money += amount;
+    notifyListeners();
+  }
+
+  void updateFans(int count) {
+    fans += count;
+    notifyListeners();
   }
 }

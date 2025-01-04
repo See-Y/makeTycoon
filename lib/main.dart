@@ -17,6 +17,9 @@ import 'screens/quarter/member_recruitment_screen.dart';
 import 'screens/game_start/band_name_screen.dart';
 import 'providers/band_provider.dart';
 
+// Band Provider
+import 'providers/band_provider.dart';
+
 void main() {
   runApp(BandSimulationApp());
 }

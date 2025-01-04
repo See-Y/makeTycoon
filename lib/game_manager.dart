@@ -1,9 +1,3 @@
-import 'dart:math';
-import 'models/band.dart';
-import 'models/member.dart';
-import 'logic/member_creation_logic.dart';
-import 'package:flutter/material.dart';
-
 class GameManager {
   static final GameManager _instance = GameManager._internal();
 
@@ -51,7 +45,7 @@ class GameManager {
 
   // 분기 시작 확인
   bool isQuarterStart() {
-    return currentMonth % 3 == 0; // 3, 6, 9, 12월일 때 분기 시작
+    return currentMonth % 3 == 1; // 3, 6, 9, 12월일 때 분기 시작
   }
 
   // 주차 리셋

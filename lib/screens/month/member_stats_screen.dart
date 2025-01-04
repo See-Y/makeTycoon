@@ -9,6 +9,7 @@ class MemberStatsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('멤버 스탯'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
           child: ElevatedButton(

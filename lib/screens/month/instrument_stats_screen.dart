@@ -10,6 +10,7 @@ class InstrumentStatsScreen extends StatelessWidget {
         child: Scaffold(
         appBar: AppBar(
           title: const Text('악기 스탯'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
           child: ElevatedButton(

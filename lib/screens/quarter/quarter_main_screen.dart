@@ -34,6 +34,7 @@ class _QuarterCycleMain extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('분기 사이클 메인'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
           child: ElevatedButton(

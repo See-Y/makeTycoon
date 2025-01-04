@@ -5,16 +5,18 @@ class GameStartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('밴드 시뮬레이션'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings), // 설정 아이콘
-            onPressed: () {
-              // 설정 화면으로 이동하는 로직
-              Navigator.pushNamed(context, '/settings'); // 설정 화면 라우트로 연결
-            },
+    return PopScope(
+      canPop: false, // 뒤로가기 비활성화
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Game Start'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+        ),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/monthly-cycle'),
+            child: const Text('게임 시작'),
+
           ),
         ],
       ),

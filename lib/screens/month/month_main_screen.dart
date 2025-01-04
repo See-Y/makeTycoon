@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'member_stats_screen.dart';
 import 'instrument_stats_screen.dart';
+import '../../logic/monthly_data_manager.dart';
+import '../../game_manager.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,43 +16,125 @@ class MonthMainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Band bandModel = Provider.of<BandProvider>(context).band;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return PopScope(
+      canPop: false, // 뒤로가기 비활성화
+      child: Scaffold(
+        body: PageView(
           children: [
-            Text('돈: \$${bandModel.money} 팬: ${bandModel.fans}명'),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.pushNamed(context, '/settings');
-              },
-            ),
+            const _MonthCycleMain(),
+            const MemberStatsScreen(),
+            const InstrumentStatsScreen(),
           ],
         ),
       ),
-      body: PageView(
+    );
+  }
+}
+
+class _MonthCycleMain extends StatefulWidget {
+  const _MonthCycleMain();
+
+  @override
+  State<_MonthCycleMain> createState() => _MonthCycleMainState();
+}
+
+class _MonthCycleMainState extends State<_MonthCycleMain> {
+  final List<String> activityOptions = ["공연", "음반 작업", "휴식"];
+
+  void _startWeeklyCycle(BuildContext context) {
+    final manager = MonthlyDataManager();
+
+    if (!manager.isAllWeeksSelected()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("모든 주차의 활동을 선택해주세요.")),
+      );
+      return;
+    }
+
+    // 1주차부터 시작
+    log("button clicked", name: 'week');
+    _navigateToWeekScreen(context);
+  }
+
+  void _navigateToWeekScreen(BuildContext context) {
+    final manager = MonthlyDataManager();
+    final week = GameManager().currentWeek;
+    final activity = manager.getWeeklyActivity(week - 1); // 주차는 0부터 저장
+    log("activity selected: ${activity}", name: 'week');
+
+    // 현재 주차의 활동에 따라 이동
+    if (activity == "공연") {
+      Navigator.pushReplacementNamed(context, '/week-performance');
+    } else if (activity == "음반 작업") {
+      Navigator.pushReplacementNamed(context, '/week-album');
+    } else if (activity == "휴식") {
+      Navigator.pushReplacementNamed(context, '/week-rest');
+    }
+  }
+
+  void _onWeekCompleted(BuildContext context) {
+    final manager = GameManager();
+
+    if (manager.currentWeek < 4) {
+      // 다음 주차로 진행
+      manager.currentWeek += 1;
+      _navigateToWeekScreen(context);
+    } else {
+      // 월간 주기 종료
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("월간 주기가 완료되었습니다!")),
+      );
+      Navigator.pop(context); // 월간 화면으로 복귀
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final currentMonth = GameManager().currentMonth; // 현재 달 정보 가져오기
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("${currentMonth}월"),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+      ),
+      body: Column(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                '월간 사이클 메인 화면',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/schedule-input'); // 스케줄 입력 화면으로 이동
-                },
-                child: const Text('스케줄 입력하기'),
-              ),
-            ],
+          const SizedBox(height: 16),
+          const Text(
+            "이번 달 계획 작성",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const MemberStatsScreen(), //왼쪽 스와이프
-          const InstrumentStatsScreen(), //오른쪽 스와이프
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text("${index + 1}주차 활동: ${MonthlyDataManager().getWeeklyActivity(index) ?? "선택 안됨"}"),
+                  trailing: DropdownButton<String>(
+                    hint: const Text("활동 선택"),
+                    value: MonthlyDataManager().getWeeklyActivity(index),
+                    items: activityOptions.map((activity) {
+                      return DropdownMenuItem(
+                        value: activity,
+                        child: Text(activity),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          MonthlyDataManager().setWeeklyActivity(index, value);
+                        });
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => _startWeeklyCycle(context),
+            child: const Text('다음'),
+          ),
         ],
       ),
     );

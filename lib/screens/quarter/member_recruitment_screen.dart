@@ -9,6 +9,7 @@ class MemberRecruitmentScreen extends StatelessWidget {
       child:  Scaffold(
         appBar: AppBar(
           title: const Text('신규 멤버 영입'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: const Center(
           child: Text('신규 멤버 영입 화면'),

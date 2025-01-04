@@ -16,6 +16,7 @@ class BandNameScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('밴드 이름 설정'),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -44,10 +45,7 @@ class BandNameScreen extends StatelessWidget {
                 final bandName = _nameController.text.trim();
                 if (bandName.isNotEmpty) {
                   Provider.of<BandProvider>(context, listen: false).createInitialBand(bandName); // 새로운 Band 생성
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MonthMainScreen()), //month_main_screen으로 이동
-                  );
+                  Navigator.pushNamed(context, '/monthly-cycle');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('밴드 이름을 입력해주세요!')),

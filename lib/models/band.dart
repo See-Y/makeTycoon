@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import 'album.dart';
-import 'instrument.dart';
 import 'member.dart';
 
 class Band with ChangeNotifier{

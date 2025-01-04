@@ -17,8 +17,6 @@ import 'screens/quarter/member_recruitment_screen.dart';
 import 'screens/game_start/band_name_screen.dart';
 import 'providers/band_provider.dart';
 
-// Band Provider
-import 'providers/band_provider.dart';
 
 void main() {
   runApp(BandSimulationApp());
@@ -29,14 +27,14 @@ class BandSimulationApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameManager = GameManager(); // GameManager 싱글톤 인스턴스 초기화
+    final gameManager = GameManager(); // GameManager 싱글톤 인스턴스 초기화// 숨길 라우트 이름 리스트
     return ChangeNotifierProvider(
       create: (context) => BandProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
+        initialRoute: '/game-start',
         routes: {
-        '/': (context) => const GameStartScreen(),
+        '/game-start': (context) => const GameStartScreen(),
         '/band-name': (context) => BandNameScreen(),
         //'/settings': (context) => const SettingsScreen(),
         '/monthly-cycle': (context) => const MonthMainScreen(),

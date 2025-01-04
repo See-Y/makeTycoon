@@ -15,7 +15,6 @@ class GameStartScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildStatusBar(), // 돈과 팬 수를 표시하는 상단 바
           _buildButtons(context), // 처음부터/계속하기 버튼
           // ElevatedButton(
           // onPressed: () => Navigator.pushNamed(context, '/monthly-cycle'),
@@ -23,19 +22,6 @@ class GameStartScreen extends StatelessWidget {
           // ),
         ],
        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusBar() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text('돈: \$0', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text('팬: 0명', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        ],
       ),
     );
   }

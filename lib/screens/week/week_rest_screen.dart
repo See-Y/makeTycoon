@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/widget/global_wrapper.dart';
 import '../../game_manager.dart';
 import '../../logic/monthly_data_manager.dart';
 
@@ -8,8 +7,7 @@ class WeekRestScreen extends StatelessWidget {
   const WeekRestScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return PopScope(
-      canPop: false, // 뒤로가기 비활성화
+  Widget build(BuildContext context) {return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
           title: Text('${GameManager().currentMonth}주차: 휴식'),
@@ -37,7 +35,7 @@ class WeekRestScreen extends StatelessWidget {
       // 월간 주기 종료
       gameManager.incrementWeek();
       //MonthlyDataManager().resetMonthlyData(); // 활동 데이터 초기화
-      Navigator.pushReplacementNamed(context, '/monthly-summary');
+      Navigator.pushNamed(context, '/monthly-summary');
     }
   }
 
@@ -46,11 +44,11 @@ class WeekRestScreen extends StatelessWidget {
     final nextWeekActivity = manager.getWeeklyActivity(GameManager().currentWeek - 1);
 
     if (nextWeekActivity == "공연") {
-      Navigator.pushReplacementNamed(context, '/week-performance');
+      Navigator.pushNamed(context, '/week-performance');
     } else if (nextWeekActivity == "음반 작업") {
-      Navigator.pushReplacementNamed(context, '/week-album');
+      Navigator.pushNamed(context, '/week-album');
     } else if (nextWeekActivity == "휴식") {
-      Navigator.pushReplacementNamed(context, '/week-rest');
+      Navigator.pushNamed(context, '/week-rest');
     }
   }
 }

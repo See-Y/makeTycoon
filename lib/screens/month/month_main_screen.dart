@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/widget/global_wrapper.dart';
 import 'member_stats_screen.dart';
 import 'instrument_stats_screen.dart';
 import '../../logic/monthly_data_manager.dart';
 import '../../game_manager.dart';
 
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/band.dart';
 import '../../providers/band_provider.dart'; // band_provider import
@@ -18,23 +16,13 @@ class MonthMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Band bandModel = Provider.of<BandProvider>(context).band;
+    final currentMonth = GameManager().currentMonth; // 현재 달 정보 가져오기
 
-    return PopScope(
-      canPop: false, // 뒤로가기 비활성화
+    return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('돈: \$${bandModel.money} 팬: ${bandModel.fans}명'),
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/settings');
-                },
-              ),
-            ],
-          ),
+          title: Text("${currentMonth}월"),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: PageView(
           controller: PageController(initialPage: 1),  // 시작 페이지를 1로 설정
@@ -79,27 +67,11 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
 
     // 현재 주차의 활동에 따라 이동
     if (activity == "공연") {
-      Navigator.pushReplacementNamed(context, '/week-performance');
+      Navigator.pushNamed(context, '/week-performance');
     } else if (activity == "음반 작업") {
-      Navigator.pushReplacementNamed(context, '/week-album');
+      Navigator.pushNamed(context, '/week-album');
     } else if (activity == "휴식") {
-      Navigator.pushReplacementNamed(context, '/week-rest');
-    }
-  }
-
-  void _onWeekCompleted(BuildContext context) {
-    final manager = GameManager();
-
-    if (manager.currentWeek < 4) {
-      // 다음 주차로 진행
-      manager.currentWeek += 1;
-      _navigateToWeekScreen(context);
-    } else {
-      // 월간 주기 종료
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("월간 주기가 완료되었습니다!")),
-      );
-      Navigator.pop(context); // 월간 화면으로 복귀
+      Navigator.pushNamed(context, '/week-rest');
     }
   }
 
@@ -107,10 +79,6 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
   Widget build(BuildContext context) {
     final currentMonth = GameManager().currentMonth; // 현재 달 정보 가져오기
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${currentMonth}월"),
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-      ),
       body: Column(
         children: [
           const SizedBox(height: 16),

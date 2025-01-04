@@ -13,7 +13,7 @@ class MemberStatsScreen extends StatelessWidget {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Member Stats'),
+          title: const Text('멤버 둘러보기'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Column(

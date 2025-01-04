@@ -2,45 +2,54 @@ import 'package:flutter/material.dart';
 import 'member_stats_screen.dart';
 import 'instrument_stats_screen.dart';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../models/band.dart';
+import '../../providers/band_provider.dart'; // band_provider import
+
 class MonthMainScreen extends StatelessWidget {
   const MonthMainScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return PopScope(
-      canPop: false, // 뒤로가기 비활성화
-      child:  Scaffold(
-        body: PageView(
+  Widget build(BuildContext context) {
+    final Band bandModel = Provider.of<BandProvider>(context).band;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _MonthCycleMain(onNext: () {
-              Navigator.pushNamed(context, '/weekly-performance');
-            }),
-            const MemberStatsScreen(),
-            const InstrumentStatsScreen(),
+            Text('돈: \$${bandModel.money} 팬: ${bandModel.fans}명'),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _MonthCycleMain extends StatelessWidget {
-  final VoidCallback onNext;
-
-  const _MonthCycleMain({required this.onNext});
-
-  @override
-  Widget build(BuildContext context) {return PopScope(
-      canPop: false, // 뒤로가기 비활성화
-      child:  Scaffold(
-        appBar: AppBar(
-          title: const Text('월간 사이클 메인'),
-        ),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: onNext,
-            child: const Text('다음'),
+      body: PageView(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                '월간 사이클 메인 화면',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/schedule-input'); // 스케줄 입력 화면으로 이동
+                },
+                child: const Text('스케줄 입력하기'),
+              ),
+            ],
           ),
-        ),
+          const MemberStatsScreen(), //왼쪽 스와이프
+          const InstrumentStatsScreen(), //오른쪽 스와이프
+        ],
       ),
     );
   }

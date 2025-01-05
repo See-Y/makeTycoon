@@ -159,5 +159,54 @@ class BandProvider with ChangeNotifier {
     notifyListeners(); // 상태 업데이트
   }
 
+  List<int> getTotalMemberStats() {
+
+    List<int> totalStats = [];
+    totalStats.add(0);
+    totalStats.add(0);
+    totalStats.add(0);
+    totalStats.add(0);
+
+    for (var member in _band.members) {
+      totalStats[0] += member.stats[0];  // 관종
+      totalStats[1] += member.stats[1]; // 똘끼
+      totalStats[2] += member.stats[2];   // 깡
+      totalStats[3] += member.stats[3];   // 스껄
+
+    }
+
+    return totalStats;
+  }
+
+  double getTotalPerformanceQualityBoost() {
+    double totalBoost = 0.0;
+
+    for (var member in _band.members) {
+      final instrument = member.instrument; // 각 멤버의 악기
+      if (instrument != null && instrument.effects.containsKey('performanceBoost')) {
+        totalBoost += instrument.effects['performanceBoost']!;
+      }
+    }
+
+    return totalBoost;
+  }
+
+
+  double getTotalAlbumQualityBoost() {
+    double totalBoost = 0.0;
+
+    for (var member in _band.members) {
+      final instrument = member.instrument; // 각 멤버의 악기
+      if (instrument != null && instrument.effects.containsKey('albumQualityBoost')) {
+        totalBoost += instrument.effects['albumQualityBoost']!;
+      }
+    }
+
+    return totalBoost;
+  }
+
+
+
+
 
 }

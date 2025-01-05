@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/screens/month/album_list_screen.dart';
 import 'game_manager.dart'; // GameManager 추가
 import 'package:provider/provider.dart';
 import 'providers/band_provider.dart';
@@ -19,6 +20,7 @@ import 'screens/quarter/member_recruitment_screen.dart';
 import 'screens/game_start/band_name_screen.dart';
 import 'screens/week/week_performance_result_screen.dart';
 import 'screens/week/album_release_screen.dart';
+import 'screens/month/album_list_screen.dart';
 import 'package:make_tycoon/screens/month/member_level_up_screen.dart';
 
 
@@ -51,6 +53,7 @@ class BandSimulationApp extends StatelessWidget {
         '/week-performance': (context) => const WeekPerformanceScreen(),
         '/week-album': (context) => const WeekAlbumScreen(),
         '/week-rest': (context) => const WeekRestScreen(),
+        '/album-list': (context) => AlbumListScreen(),
         '/week-performance-result': (context) => const WeekPerformanceResultScreen(),
         '/album-release': (context) => AlbumReleaseScreen(),
         '/monthly-summary': (context) => const MonthSummaryScreen(),

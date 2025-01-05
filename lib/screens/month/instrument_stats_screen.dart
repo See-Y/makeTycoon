@@ -58,7 +58,7 @@ class InstrumentStatsScreen extends StatelessWidget {
                             SnackBar(content: Text(message)),
                           );
                         },
-                        child: Text("강화하기 : ${instrumentEnhanceCosts[instrument.rarity]}"),
+                        child: Text("강화하기 : ${instrumentEnhanceCosts[instrument.rarity]}만 원"),
                       ),
                     ],
                   ),

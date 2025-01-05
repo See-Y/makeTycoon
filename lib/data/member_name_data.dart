@@ -13,11 +13,18 @@ final List<String> memberNames = [
   "스티븐",  // Steven
   "브루스",  // Bruce
   "오지",     // Ozzy
-  "악셀",     // Axl
+  "액슬",     // Axl
   "슬래시",  // Slash
   "에디",     // Eddie
   "조쉬",     // Josh
   "빌리",     // Billy
   "톰",     // Thom
   "보노",     // Bono
+  "한주",
+  "춘추",
+  "도현",
+  "장원",
+  "재평",
+  "제라드",
+  "잭"
 ];

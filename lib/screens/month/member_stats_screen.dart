@@ -147,7 +147,7 @@ class _MemberCardState extends State<MemberCard> {
                       );
                     }
                   },
-                  child: Text("레벨업 비용: \$${nextLevelCost}"),
+                  child: Text("레벨업 비용: ${nextLevelCost}만 원"),
                 ),
               ),
 

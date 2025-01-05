@@ -11,6 +11,11 @@ class GameManager {
   int currentWeek = 1;  // 현재 주차 (1~4)
   bool isMonthComplete = false; // 월간 주기 완료 여부
   bool isGameOver = false; // 게임 종료 여부
+  List<String> membername= [];
+
+  void addmembername(String name){
+    membername.add(name);
+  }
 
   // 주차 증가
   void incrementWeek() {

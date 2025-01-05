@@ -14,22 +14,22 @@ class StatusBar extends StatelessWidget {
     final name = bandProvider.band.name;
 
     return Container(
-      color: Colors.grey[300], // StatusBar 배경 색상
+      color: Colors.black, // StatusBar 배경 색상
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             name,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(
-            '돈: \$$money',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            '돈: $money만 원',
+            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(
             '팬: $fans명',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ],
       ),

@@ -69,7 +69,7 @@ class BandProvider with ChangeNotifier {
       members: bandMembers,
       albums: [],
       fans: 0,
-      money: 1000,
+      money: 100,
     );
     notifyListeners();
   }
@@ -102,12 +102,12 @@ class BandProvider with ChangeNotifier {
   }
 
   void updateMoney(int newMoney){
-    _band.money = newMoney;
+    _band.money += newMoney;
     notifyListeners();
   }
 
   void updateFans(int newFansCount) {
-    _band.fans = newFansCount;
+    _band.fans += newFansCount;
     notifyListeners(); // UI에 즉시 반영
   }
 
@@ -147,13 +147,14 @@ class BandProvider with ChangeNotifier {
     return message;
   }
 
-  void addAlbum(String name, int fanBoost, int monthlyIncome) {
+  void addAlbum(String name, int fanBoost, int monthlyIncome, String? albumArt) {
     DateTime releaseDate = DateTime.now(); // 현재 시간을 발매일로 설정
     Album newAlbum = Album(
       name: name,
       releaseDate: releaseDate, // 발매일을 현재 시간으로 설정
       fanBoost: fanBoost,
       monthlyIncome: monthlyIncome,
+      albumArt: albumArt,
     );
     _band.albums.add(newAlbum); // 앨범을 리스트에 추가
     notifyListeners(); // 상태 업데이트
@@ -203,6 +204,16 @@ class BandProvider with ChangeNotifier {
     }
 
     return totalBoost;
+  }
+
+  void applyMonthlySummary() {
+    int totalMonthlyIncome = _band.albums.fold(0, (sum, album) => sum + album.monthlyIncome);
+    int totalFanBoost = _band.albums.fold(0, (sum, album) => sum + album.fanBoost);
+
+    _band.money += totalMonthlyIncome;
+    _band.fans += totalFanBoost;
+
+    notifyListeners();
   }
 
 

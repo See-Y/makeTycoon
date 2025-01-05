@@ -7,9 +7,9 @@ final Map<String, Map<String, double>> instrumentEnhanceRates = {
 };
 
 final Map<String, int> instrumentEnhanceCosts = {
-  '일반': 1000,
-  '레어': 3000,
-  '유니크': 10000,
-  '레전드': 50000,
+  '일반': 10,
+  '레어': 30,
+  '유니크': 100,
+  '레전드': 500,
   '신화': 0, // 강화 불가
 };

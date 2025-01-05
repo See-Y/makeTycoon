@@ -1,52 +1,85 @@
 import 'package:flutter/material.dart';
 import '../../game_manager.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../logic/monthly_data_manager.dart';
 import 'package:provider/provider.dart';
 import '../../providers/band_provider.dart';
 import '../../logic/album_logic.dart';
+import 'dart:io';
 
-class AlbumReleaseScreen extends StatelessWidget {
+class AlbumReleaseScreen extends StatefulWidget {
+  @override
+  _AlbumReleaseScreenState createState() => _AlbumReleaseScreenState();
+}
+
+class _AlbumReleaseScreenState extends State<AlbumReleaseScreen> {
   final TextEditingController albumNameController = TextEditingController();
+  File? _albumArt; // 선택한 앨범 아트 파일
+  Future<void> _pickAlbumArt() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _albumArt = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _releaseAlbum() {
+    if (albumNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('음반 이름을 입력해주세요!')),
+      );
+      return;
+    }
+
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    bandProvider.addAlbum(
+      albumNameController.text,
+      AlbumLogic.calculateFanBoost(bandProvider),
+      AlbumLogic.calculateMonthlyIncome(bandProvider),
+      _albumArt?.path, // 앨범 아트 경로
+    );
+    bandProvider.resetAlbumWorkWeeks();
+
+    _onActivityComplete(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bandProvider = Provider.of<BandProvider>(context, listen: false);
-    final fanBoost=AlbumLogic.calculateFanBoost(bandProvider);
-    final monthlyIncome = AlbumLogic.calculateMonthlyIncome(bandProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('음반 발매'),
-      ),
+      appBar: AppBar(title: const Text('음반 발매')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('음반의 이름을 지어주세요:', style: TextStyle(fontSize: 20)),
             TextField(
               controller: albumNameController,
-              decoration: const InputDecoration(
-                hintText: '음반 이름을 입력하세요',
+              decoration: const InputDecoration(labelText: '음반 이름'),
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: _pickAlbumArt,
+              child: _albumArt == null
+                  ? Container(
+                height: 150,
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: const Center(child: Text('앨범 아트를 선택하세요')),
+              )
+                  : Image.file(
+                _albumArt!,
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                final albumName = albumNameController.text;
-                if (albumName.isNotEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('음반 "$albumName"이 발매되었습니다!')),
-                  );
-                  bandProvider.addAlbum(albumName, fanBoost, monthlyIncome);
-                  bandProvider.resetAlbumWorkWeeks();
-                  _onActivityComplete(context);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('음반 이름을 입력해주세요.')),
-                  );
-                }
-              },
-              child: const Text('발매하기'),
+              onPressed: _releaseAlbum,
+              child: const Text('음반 발매하기'),
             ),
           ],
         ),

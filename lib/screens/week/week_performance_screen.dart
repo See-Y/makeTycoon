@@ -109,7 +109,7 @@ class _WeekPerformanceScreenState extends State<WeekPerformanceScreen> {
     return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${GameManager().currentWeek}주차: 공연'),
+          title: Text('${GameManager().currentWeek}주차: 공연장을 선택하세요'),
           automaticallyImplyLeading: false,
         ),
         body: Column(

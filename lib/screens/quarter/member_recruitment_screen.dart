@@ -1,19 +1,119 @@
 import 'package:flutter/material.dart';
-import 'package:make_tycoon/widget/global_wrapper.dart';
+import 'package:make_tycoon/logic/member_creation_logic.dart';
+import 'package:provider/provider.dart';
+import '../../models/member.dart';  // 멤버 모델
+import '../../providers/band_provider.dart';  // BandProvider
+import '../../data/member_data.dart';
+import '../../models/instrument.dart';
+import 'dart:io';
 
-class MemberRecruitmentScreen extends StatelessWidget {
+class MemberRecruitmentScreen extends StatefulWidget {
   const MemberRecruitmentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return GlobalWrapper(
-      child:  Scaffold(
-        appBar: AppBar(
-          title: const Text('신규 멤버 영입'),
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        ),
-        body: const Center(
-          child: Text('신규 멤버 영입 화면'),
-        ),
+  _MemberRecruitmentScreenState createState() => _MemberRecruitmentScreenState();
+}
+
+class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
+  late List<Member> availableMembers;
+
+  @override
+  void initState() {
+    super.initState();
+    // 밴드에 이미 있는 멤버를 제외한 신규 멤버들을 생성
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    availableMembers = _generateNewMembers(bandProvider);
+  }
+
+  List<Member> _getAllPotentialMembers() {
+
+    List<Member> potentialMembers = [];
+
+    for (var member in memberData){
+      var newMember = MemberCreationLogic.createMember(Instrument(name: member['instrument']), false);
+      potentialMembers.add(newMember);
+    }
+
+    return potentialMembers;
+  }
+
+  List<Member> _generateNewMembers(BandProvider bandProvider) {
+    // 가능성 있는 멤버 목록을 가져와
+    List<Member> allPotentialMembers = _getAllPotentialMembers();
+
+    // 이미 밴드에 있는 멤버를 제외
+    List<Member> newMembers = allPotentialMembers.where((member) {
+      return !bandProvider.band.members.contains(member);
+    }).toList();
+
+    return newMembers;
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    return Scaffold(
+      appBar: AppBar(title: const Text("신규 멤버 영입")),
+      body: ListView.builder(
+        itemCount: availableMembers.length,
+        itemBuilder: (context, index) {
+          final member = availableMembers[index];
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(color: Colors.black26, blurRadius: 6, spreadRadius: 2),
+                ],
+              ),
+              child: ListTile(
+                contentPadding: EdgeInsets.all(16),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: member.image != null
+                      ? Image.asset(
+                    member.image!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  )
+                      : Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey,
+                    child: const Icon(
+                      Icons.music_note,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  ),
+                ),
+                title: Text(member.name),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('동물: ${member.animalType}'),
+                    Text('${member.instrument}'),
+                    Text('MBTI: ${member.mbti}'),
+                    Text('리더 패시브 효과 1: ${member.leaderEffect1.description}'),
+                    Text('리더 패시브 효과 2: ${member.leaderEffect2.description}'),
+                  ],
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    // 밴드에 멤버 추가
+                    bandProvider.addMember(member);
+                    // 추가 후 화면 전환 또는 성공 메시지 표시
+                  },
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

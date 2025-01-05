@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:flame/game.dart';
 import 'package:make_tycoon/models/instrument.dart';
+import 'package:make_tycoon/game_manager.dart';
 
 import '../models/member.dart';
 import '../data/member_data.dart';
@@ -17,6 +19,15 @@ class MemberCreationLogic {
     return result.first; // 조건에 맞는 첫 번째 데이터를 반환
   }
 
+  static String getRandomMemberName(){
+    String newName="망함";
+    do {
+      // memberNameData에서 랜덤으로 이름을 선택
+      newName = (memberNames..shuffle()).first;
+    } while (GameManager().membername.contains(newName));
+    return newName;
+  }
+
   // 멤버 생성
   static Member createMember(Instrument instrument, bool isLeader) {
     final data = getMemberData(instrument);
@@ -24,7 +35,8 @@ class MemberCreationLogic {
     final random = Random();
 
     // 랜덤 이름 가져오기
-    final name = memberNames[random.nextInt(memberNames.length)];
+    final name = getRandomMemberName();
+    GameManager().addmembername(name);
 
     // 랜덤 스탯 생성
     final stats = List<int>.generate(4, (_) => random.nextInt(10) + 1);

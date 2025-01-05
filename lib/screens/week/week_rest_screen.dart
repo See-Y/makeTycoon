@@ -41,7 +41,7 @@ class WeekRestScreen extends StatelessWidget {
 
   void _navigateToNextWeek(BuildContext context) {
     final manager = MonthlyDataManager();
-    final nextWeekActivity = manager.getWeeklyActivity(GameManager().currentWeek - 1);
+    final nextWeekActivity = manager.getWeeklyActivity(GameManager().currentWeek - 1)?.activityType;
 
     if (nextWeekActivity == "공연") {
       Navigator.pushNamed(context, '/week-performance');

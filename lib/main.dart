@@ -17,6 +17,8 @@ import 'screens/quarter/quarter_main_screen.dart';
 import 'screens/quarter/member_removal_screen.dart';
 import 'screens/quarter/member_recruitment_screen.dart';
 import 'screens/game_start/band_name_screen.dart';
+import 'screens/week/week_performance_result_screen.dart';
+import 'screens/week/album_release_screen.dart';
 import 'package:make_tycoon/screens/month/member_level_up_screen.dart';
 
 
@@ -49,6 +51,8 @@ class BandSimulationApp extends StatelessWidget {
         '/week-performance': (context) => const WeekPerformanceScreen(),
         '/week-album': (context) => const WeekAlbumScreen(),
         '/week-rest': (context) => const WeekRestScreen(),
+        '/week-performance-result': (context) => const WeekPerformanceResultScreen(),
+        '/album-release': (context) => AlbumReleaseScreen(),
         '/monthly-summary': (context) => const MonthSummaryScreen(),
         '/quarter-main': (context) => const QuarterMainScreen(),
         '/member-removal': (context) => const MemberRemovalScreen(),

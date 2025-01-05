@@ -5,6 +5,7 @@ import '../data/instrument_enhance_data.dart';
 import '../logic/instrument_enhance_logic.dart';
 import '../models/band.dart';
 import '../models/member.dart';
+import '../models/album.dart';
 import '../logic/member_creation_logic.dart';
 import '../logic/approval_logic.dart';
 
@@ -19,6 +20,20 @@ class BandProvider with ChangeNotifier {
   );
   Band get band => _band;
   late List<Member> bandMembers;
+
+  int _albumWorkWeeks = 0; // 음반 작업 주차 (5주가 되면 발매 가능)
+
+  int get albumWorkWeeks => _albumWorkWeeks;
+
+  void incrementAlbumWorkWeeks() {
+    _albumWorkWeeks++;
+    notifyListeners();
+  }
+
+  void resetAlbumWorkWeeks() {
+    _albumWorkWeeks = 0;
+    notifyListeners();
+  }
 
   /// 밴드 초기화
   void initializeBand() {
@@ -91,6 +106,11 @@ class BandProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateFans(int newFansCount) {
+    _band.fans = newFansCount;
+    notifyListeners(); // UI에 즉시 반영
+  }
+
   void updateMemberStats(Member member, List<int> updatedStats) {
     final index = _band.members.indexOf(member);
     if (index != -1) {
@@ -125,6 +145,18 @@ class BandProvider with ChangeNotifier {
     }
 
     return message;
+  }
+
+  void addAlbum(String name, int fanBoost, int monthlyIncome) {
+    DateTime releaseDate = DateTime.now(); // 현재 시간을 발매일로 설정
+    Album newAlbum = Album(
+      name: name,
+      releaseDate: releaseDate, // 발매일을 현재 시간으로 설정
+      fanBoost: fanBoost,
+      monthlyIncome: monthlyIncome,
+    );
+    _band.albums.add(newAlbum); // 앨범을 리스트에 추가
+    notifyListeners(); // 상태 업데이트
   }
 
 

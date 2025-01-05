@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:make_tycoon/widget/global_wrapper.dart';
 import '../../game_manager.dart';
 import '../../logic/monthly_data_manager.dart';
+import 'package:provider/provider.dart';
+import '../../providers/band_provider.dart';
 
 class WeekAlbumScreen extends StatelessWidget {
   const WeekAlbumScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return GlobalWrapper(
+  Widget build(BuildContext context) {
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    final isAlbumReleaseWeek = bandProvider.albumWorkWeeks + 1 == 5;
+
+    return GlobalWrapper(
+
       child: Scaffold(
         appBar: AppBar(
           title: Text('${GameManager().currentMonth}주차: 음반'),
@@ -18,7 +25,16 @@ class WeekAlbumScreen extends StatelessWidget {
         body: Center(
           child: ElevatedButton(
             onPressed: () {
-              _onActivityComplete(context);
+              bandProvider.incrementAlbumWorkWeeks();
+              if(isAlbumReleaseWeek){
+                Navigator.pushNamed(context, '/album-release');
+              }
+              else{
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('음반 작업을 진행했습니다. (${bandProvider.albumWorkWeeks}/5)')),
+                );
+                _onActivityComplete(context);
+              }
             },
             child: const Text('다음'),
           ),

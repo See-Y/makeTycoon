@@ -1,22 +1,23 @@
 final List<String> memberNames = [
-  "노월",     // Noel
-  "마이골",  // Michael
-  "푸례디",  // Freddie
-  "대위두",  // David
-  "구로투",  // Kurt
-  "존한",     // John
-  "포을",     // Paul
+  "리암",
+  "노엘",     // Noel
+  "마이클",  // Michael
+  "프레디",  // Freddie
+  "데이비드",  // David
+  "커트",  // Kurt
+  "존",     // John
+  "폴",     // Paul
   "지미",     // Jimi
-  "노발투",  // Robert
-  "재임수",  // James
-  "시티분",  // Steven
-  "부루수",  // Bruce
+  "로버트",  // Robert
+  "제임스",  // James
+  "스티븐",  // Steven
+  "브루스",  // Bruce
   "오지",     // Ozzy
-  "악슬",     // Axl
-  "슬래수",  // Slash
-  "애딘",     // Eddie
-  "조식",     // Josh
-  "비리",     // Billy
-  "토모",     // Thom
-  "보농",     // Bono
+  "악셀",     // Axl
+  "슬래시",  // Slash
+  "에디",     // Eddie
+  "조쉬",     // Josh
+  "빌리",     // Billy
+  "톰",     // Thom
+  "보노",     // Bono
 ];

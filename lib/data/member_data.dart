@@ -116,7 +116,7 @@ final List<Map<String, dynamic>> memberData = [
     ),
   },
   {
-    "instrument": "첼로",
+    "instrument": "콘트라베이스",
     "animalType": "펭귄",
     "leaderEffect1": LeaderEffect(
       description: "돌발 이벤트 등장률 +10%",

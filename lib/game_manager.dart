@@ -1,3 +1,11 @@
+import 'providers/band_provider.dart';
+import 'package:provider/provider.dart';
+import 'logic/member_creation_logic.dart';
+import 'models/member.dart';
+import 'package:flutter/material.dart';
+import 'data/member_data.dart';
+import 'models/instrument.dart';
+
 class GameManager {
   static final GameManager _instance = GameManager._internal();
 
@@ -12,6 +20,48 @@ class GameManager {
   bool isMonthComplete = false; // 월간 주기 완료 여부
   bool isGameOver = false; // 게임 종료 여부
   List<String> membername= [];
+  List<Member> availableMembers = [];
+
+  late BandProvider bandProvider;
+
+
+  List<Member> _getAllPotentialMembers() {
+
+    List<Member> potentialMembers = [];
+
+    for (var member in memberData){
+      var newMember = MemberCreationLogic.createMember(Instrument(name: member['instrument']), false);
+      potentialMembers.add(newMember);
+    }
+
+    return potentialMembers;
+  }
+
+  List<Member> _generateNewMembers(BandProvider bandProvider) {
+    // 가능성 있는 멤버 목록을 가져와
+    List<Member> allPotentialMembers = _getAllPotentialMembers();
+
+    // 이미 밴드에 있는 멤버를 제외
+    List<Member> newMembers = allPotentialMembers.where((member) {
+      return !bandProvider.band.members.contains(member);
+    }).toList();
+
+    return newMembers;
+  }
+
+    // 초기 availableMembers 설정 예시
+  List<Member> setavailableMember(BuildContext context) {
+    final bandProvider = context.read<BandProvider>();
+    availableMembers = _generateNewMembers(bandProvider);
+    return availableMembers;
+  }
+
+
+  void addMember(BuildContext context, Member member) {
+    final bandProvider = context.read<BandProvider>();
+    bandProvider.addMember(member);
+    availableMembers.remove(member);
+  }
 
   void addmembername(String name){
     membername.add(name);

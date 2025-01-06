@@ -45,6 +45,7 @@ class BandNameScreen extends StatelessWidget {
                 final bandName = _nameController.text.trim();
                 if (bandName.isNotEmpty) {
                   Provider.of<BandProvider>(context, listen: false).createInitialBand(bandName); // 새로운 Band 생성
+                  GameManager().setavailableMember(context);
                   Navigator.pushNamed(context, '/monthly-cycle');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

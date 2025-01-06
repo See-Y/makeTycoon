@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/game_manager.dart';
 import 'package:make_tycoon/logic/member_creation_logic.dart';
 import 'package:provider/provider.dart';
 import '../../models/member.dart';  // 멤버 모델
@@ -15,38 +16,12 @@ class MemberRecruitmentScreen extends StatefulWidget {
 }
 
 class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
-  late List<Member> availableMembers;
+  List<Member> availableMembers = GameManager().availableMembers;
 
   @override
   void initState() {
     super.initState();
     // 밴드에 이미 있는 멤버를 제외한 신규 멤버들을 생성
-    final bandProvider = Provider.of<BandProvider>(context, listen: false);
-    availableMembers = _generateNewMembers(bandProvider);
-  }
-
-  List<Member> _getAllPotentialMembers() {
-
-    List<Member> potentialMembers = [];
-
-    for (var member in memberData){
-      var newMember = MemberCreationLogic.createMember(Instrument(name: member['instrument']), false);
-      potentialMembers.add(newMember);
-    }
-
-    return potentialMembers;
-  }
-
-  List<Member> _generateNewMembers(BandProvider bandProvider) {
-    // 가능성 있는 멤버 목록을 가져와
-    List<Member> allPotentialMembers = _getAllPotentialMembers();
-
-    // 이미 밴드에 있는 멤버를 제외
-    List<Member> newMembers = allPotentialMembers.where((member) {
-      return !bandProvider.band.members.contains(member);
-    }).toList();
-
-    return newMembers;
   }
 
 
@@ -106,7 +81,7 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
                   icon: Icon(Icons.add),
                   onPressed: () {
                     // 밴드에 멤버 추가
-                    bandProvider.addMember(member);
+                    GameManager().addMember(context, member);
                     // 추가 후 화면 전환 또는 성공 메시지 표시
                   },
                 ),

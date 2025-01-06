@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:make_tycoon/screens/month/album_list_screen.dart';
+import 'package:make_tycoon/screens/month/leaderboard_screen.dart';
 import 'package:make_tycoon/widget/global_wrapper.dart';
 import 'member_stats_screen.dart';
 import 'instrument_stats_screen.dart';
@@ -32,6 +33,7 @@ class MonthMainScreen extends StatelessWidget {
             MemberStatsScreen(),  // 왼쪽으로 스와이프하면 악기 스탯 화면
             _MonthCycleMain(),
             InstrumentStatsScreen(),  // 오른쪽으로 스와이프하면 멤버 스탯 화면
+            LeaderboardScreen(),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../client/user_data_send.dart';
 import '../../game_manager.dart';
 import '../../logic/monthly_data_manager.dart';
 import '../../widget/global_wrapper.dart';
@@ -132,6 +133,9 @@ class MonthSummaryScreen extends StatelessWidget {
                   onPressed: () {
                     bandProvider.applyMonthlySummary();
                     MonthlyDataManager().resetMonthlyData();
+
+                    saveBandData(gameManager.token, band.fans, band.money, band.leader.name, band.members);
+                    print("save band data call3e!!");
                     if (gameManager.isQuarterStart()) {
                       Navigator.pushNamed(context, '/quarter-main');
                     } else {

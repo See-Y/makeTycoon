@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.make_tycoon">
     <application
         android:label="make_tycoon"
         android:name="${applicationName}"
@@ -30,6 +31,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.gms.client_id"
+            android:value="591855019278-5gs16j50feehgt41gml909k952hdiqlc.apps.googleusercontent.com"/>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

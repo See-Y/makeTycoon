@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../logic/google_sign.dart';
+
 class GameStartScreen extends StatelessWidget {
   const GameStartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool login=false;
     return Scaffold(
         appBar: AppBar(
           title: const Text('스껄한 밴드를 만들어 보아요'),
@@ -24,10 +27,16 @@ class GameStartScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/band-name'); // 게임 시작 로직
                   }),
                   SizedBox(height: 16), // 버튼 사이 간격
-                  _buildCustomButton(context, '계속하기', () {
-                  // 계속하기 버튼 클릭 시 실행할 함수
-                    Navigator.pushNamed(context, '/continue-game'); // 계속하기 로직
-                  }),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final token = await signInWithGoogle();
+                      if (token != null) {
+                        login=true;
+                        print('Google Sign-In successful. Token: $token');
+                      }
+                    },
+                    child: Text(login?"이제 시작하세요!":"Google Login"),
+                  ),
                 ],
               ),
             ),

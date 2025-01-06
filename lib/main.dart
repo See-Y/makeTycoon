@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:make_tycoon/screens/month/album_list_screen.dart';
+import 'package:make_tycoon/screens/month/leaderboard_screen.dart';
 import 'game_manager.dart'; // GameManager 추가
 import 'package:provider/provider.dart';
 import 'providers/band_provider.dart';
@@ -60,6 +61,7 @@ class BandSimulationApp extends StatelessWidget {
         '/quarter-main': (context) => const QuarterMainScreen(),
         '/member-removal': (context) => const MemberRemovalScreen(),
         '/member-recruitment': (context) => const MemberRecruitmentScreen(),
+        '/leaderboard': (context) => LeaderboardScreen(),
         }
       ),
     );

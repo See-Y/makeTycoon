@@ -40,12 +40,16 @@ class GameManager {
   List<Member> _generateNewMembers(BandProvider bandProvider) {
     // 가능성 있는 멤버 목록을 가져와
     List<Member> allPotentialMembers = _getAllPotentialMembers();
+    List<Member> newMembers = List.from(allPotentialMembers);
 
     // 이미 밴드에 있는 멤버를 제외
-    List<Member> newMembers = allPotentialMembers.where((member) {
-      return !bandProvider.band.members.contains(member);
-    }).toList();
-
+    for (var member in allPotentialMembers) {
+      for(var member2 in bandProvider.band.members){
+        if (member.instrument.name==member2.instrument.name){
+          newMembers.remove(member);
+        }
+      }
+    }
     return newMembers;
   }
 

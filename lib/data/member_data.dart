@@ -18,6 +18,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 10,
     ),
+    "image": "assets/images/갈매기.png",
+    "position": [0.0, -0.1, 2.0],
   },
   {
     "instrument": "기타",
@@ -34,6 +36,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.increase,
       value: 15,
     ),
+    "image": "assets/images/여우.png",
+    "position": [0.0, -0.1, 1.0],
   },
   {
     "instrument": "드럼",
@@ -50,6 +54,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 10,
     ),
+    "image": "assets/images/고릴라.png",
+    "position": [0.0, -0.1, -5.0],
   },
   {
     "instrument": "베이스",
@@ -66,6 +72,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
+    "image": "assets/images/팬더.png",
+    "position": [0.0, -0.1, -4.0],
   },
   {
     "instrument": "키보드",
@@ -82,6 +90,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 10,
     ),
+    "image": "assets/images/비버.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "리코더",
@@ -98,6 +108,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
+    "image": "assets/images/너구리.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "캐스터네츠",
@@ -114,6 +126,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.increase,
       value: 5,
     ),
+    "image": "assets/images/다람쥐.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "콘트라베이스",
@@ -130,6 +144,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
+    "image": "assets/images/펭귄.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "바이올린",
@@ -146,6 +162,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 3,
     ),
+    "image": "assets/images/사슴.png",
+    "position":[0.0, -0.1, 4.0],
   },
   {
     "instrument": "트라이앵글",
@@ -162,6 +180,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
+    "image": "assets/images/개구리.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "탬버린",
@@ -178,22 +198,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.increase,
       value: 10,
     ),
-  },
-  {
-    "instrument": "장구",
-    "animalType": "닭",
-    "leaderEffect1": LeaderEffect(
-      description: "공연 성공률 +10%",
-      target: EffectTarget.performance,
-      type: EffectType.increase,
-      value: 10,
-    ),
-    "leaderEffect2": LeaderEffect(
-      description: "본인의 모든 스탯 -5",
-      target: EffectTarget.stats,
-      type: EffectType.decrease,
-      value: 5,
-    ),
+    "image": "assets/images/앵무새.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "트럼펫",
@@ -210,22 +216,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.increase,
       value: 10,
     ),
-  },
-  {
-    "instrument": "하모니카",
-    "animalType": "미어캣",
-    "leaderEffect1": LeaderEffect(
-      description: "돌발 이벤트 등장률 +10%",
-      target: EffectTarget.event,
-      type: EffectType.increase,
-      value: 10,
-    ),
-    "leaderEffect2": LeaderEffect(
-      description: "공연 성공률 -5%",
-      target: EffectTarget.performance,
-      type: EffectType.decrease,
-      value: 5,
-    ),
+    "image": "assets/images/카피바라.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "우쿨렐레",
@@ -242,6 +234,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
+    "image": "assets/images/오랑우탄.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "거문고",
@@ -258,6 +252,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 10,
     ),
+    "image": "assets/images/고슴도치.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "마림바",
@@ -274,22 +270,8 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 5,
     ),
-  },
-  {
-    "instrument": "실로폰",
-    "animalType": "개미",
-    "leaderEffect1": LeaderEffect(
-      description: "모든 공연 대관료 -10%",
-      target: EffectTarget.rentalFee,
-      type: EffectType.decrease,
-      value: 10,
-    ),
-    "leaderEffect2": LeaderEffect(
-      description: "음반 명반 확률 -5%",
-      target: EffectTarget.album,
-      type: EffectType.decrease,
-      value: 5,
-    ),
+    "image": "assets/images/코알라.png",
+    "position": [0.0, -0.1, 4.0],
   },
   {
     "instrument": "해금",
@@ -306,5 +288,7 @@ final List<Map<String, dynamic>> memberData = [
       type: EffectType.decrease,
       value: 10,
     ),
+    "image": "assets/images/두루미.png",
+    "position": [0.0, -0.1, 4.0],
   },
 ];

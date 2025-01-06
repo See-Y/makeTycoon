@@ -58,17 +58,13 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // 멤버 사진
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              image: member.image != null
-                                  ? FileImage(File(member.image!))
-                                  : AssetImage('assets/placeholder.png') as ImageProvider,
-                              fit: BoxFit.cover,
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.asset(
+                            member.image ?? 'assets/images/갈매기.png', // 기본 이미지 경로
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         SizedBox(width: 16),

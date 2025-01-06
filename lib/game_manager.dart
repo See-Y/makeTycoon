@@ -50,10 +50,9 @@ class GameManager {
   }
 
     // 초기 availableMembers 설정 예시
-  List<Member> setavailableMember(BuildContext context) {
+  void setavailableMember(BuildContext context) {
     final bandProvider = context.read<BandProvider>();
     availableMembers = _generateNewMembers(bandProvider);
-    return availableMembers;
   }
 
 

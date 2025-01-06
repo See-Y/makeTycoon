@@ -8,6 +8,7 @@ import '../../game_manager.dart';
 
 import 'package:provider/provider.dart';
 import '../../models/band.dart';
+import '../../models/member.dart';
 import '../../providers/band_provider.dart'; // band_provider import
 
 
@@ -26,7 +27,7 @@ class MonthMainScreen extends StatelessWidget {
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: PageView(
-          controller: PageController(initialPage: 2),  // 시작 페이지를 1로 설정
+          controller: PageController(initialPage: 2),  // 시작 페이지를 2로 설정
           children: [
             AlbumListScreen(),
             MemberStatsScreen(),  // 왼쪽으로 스와이프하면 악기 스탯 화면
@@ -79,10 +80,28 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
 
   @override
   Widget build(BuildContext context) {
+    final Band bandModel = Provider.of<BandProvider>(context).band;
     final currentMonth = GameManager().currentMonth; // 현재 달 정보 가져오기
+    List<Member> sortedMembers = List.from(bandModel.members)..sort((a, b) => b.position![2].compareTo(a.position![2]));
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(
+              height:300,
+              child: Stack(
+                children: sortedMembers  // elevation 기준 정렬
+                .map((member) {
+                  return Align(
+                    alignment: Alignment(member.position![0], member.position![1]),  // Alignment 기반 위치
+                    child: Image.asset(
+                      member.image ?? 'assets/images/갈매기.png',
+                      width: MediaQuery.of(context).size.width * 0.5,  // 크기를 화면 비율에 맞춤
+                    ),
+                  );
+                }).toList(),
+              ),
+          ),
           const SizedBox(height: 16),
           const Text(
             "이번 달 계획 작성",

@@ -65,7 +65,7 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
   void _navigateToWeekScreen(BuildContext context) {
     final manager = MonthlyDataManager();
     final week = GameManager().currentWeek;
-    final activity = manager.getWeeklyActivity(week - 1); // 주차는 0부터 저장
+    final activity = manager.getWeeklyActivity(week - 1)?.activityType; // 주차는 0부터 저장
 
     // 현재 주차의 활동에 따라 이동
     if (activity == "공연") {
@@ -94,10 +94,10 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
               itemCount: 4,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text("${index + 1}주차 활동: ${MonthlyDataManager().getWeeklyActivity(index) ?? "선택 안됨"}"),
+                  title: Text("${index + 1}주차 활동: ${MonthlyDataManager().getWeeklyActivity(index)?.activityType ?? "선택 안됨"}"),
                   trailing: DropdownButton<String>(
                     hint: const Text("활동 선택"),
-                    value: MonthlyDataManager().getWeeklyActivity(index),
+                    value: MonthlyDataManager().getWeeklyActivity(index)?.activityType,
                     items: activityOptions.map((activity) {
                       return DropdownMenuItem(
                         value: activity,
@@ -107,7 +107,7 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
-                          MonthlyDataManager().setWeeklyActivity(index, value);
+                          MonthlyDataManager().setWeeklyActivity(index, WeeklyActivity(activityType: value));
                         });
                       }
                     },

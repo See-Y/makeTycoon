@@ -19,7 +19,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/갈매기.png",
-    "position": [0.0, -0.1, 2.0],
+    "position": [0.0, 0.5, -10.0],
   },
   {
     "instrument": "기타",
@@ -37,7 +37,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 15,
     ),
     "image": "assets/images/여우.png",
-    "position": [0.0, -0.1, 1.0],
+    "position": [0.5, 0.05, -6.0],
   },
   {
     "instrument": "드럼",
@@ -55,7 +55,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/고릴라.png",
-    "position": [0.0, -0.1, -5.0],
+    "position": [0.0, -0.7, 5.0],
   },
   {
     "instrument": "베이스",
@@ -73,7 +73,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/팬더.png",
-    "position": [0.0, -0.1, -4.0],
+    "position": [-0.5, -0.5, 1.0],
   },
   {
     "instrument": "키보드",
@@ -91,7 +91,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/비버.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.8, -0.5, 0.0],
   },
   {
     "instrument": "리코더",
@@ -127,7 +127,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/다람쥐.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [0.03, 0.0, -3.0],
   },
   {
     "instrument": "콘트라베이스",
@@ -145,7 +145,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/펭귄.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.2, 0.4, -9.0],
   },
   {
     "instrument": "바이올린",
@@ -163,7 +163,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 3,
     ),
     "image": "assets/images/사슴.png",
-    "position":[0.0, -0.1, 4.0],
+    "position":[0.8, -0.05, -2.0],
   },
   {
     "instrument": "트라이앵글",
@@ -181,7 +181,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/개구리.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [0.6, 0.4, -7.0],
   },
   {
     "instrument": "탬버린",
@@ -199,7 +199,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/앵무새.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [0.8, -0.7, -1.0],
   },
   {
     "instrument": "트럼펫",
@@ -217,7 +217,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/카피바라.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.4, 0.0, -5.0],
   },
   {
     "instrument": "우쿨렐레",
@@ -235,7 +235,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/오랑우탄.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [0.5, -0.5, 2.0],
   },
   {
     "instrument": "거문고",
@@ -253,7 +253,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/고슴도치.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [0.2, 0.5, -8.0],
   },
   {
     "instrument": "마림바",
@@ -271,7 +271,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/코알라.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.8, -0.8, 3.0],
   },
   {
     "instrument": "해금",
@@ -289,6 +289,6 @@ final List<Map<String, dynamic>> memberData = [
       value: 10,
     ),
     "image": "assets/images/두루미.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.05, -0.05, -4.0],
   },
 ];

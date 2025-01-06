@@ -85,10 +85,10 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
     List<Member> sortedMembers = List.from(bandModel.members)..sort((a, b) => b.position![2].compareTo(a.position![2]));
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-              height:300,
+              height: MediaQuery.of(context).size.height / 2.3,
               child: Stack(
                 children: sortedMembers  // elevation 기준 정렬
                 .map((member) {
@@ -96,13 +96,13 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
                     alignment: Alignment(member.position![0], member.position![1]),  // Alignment 기반 위치
                     child: Image.asset(
                       member.image ?? 'assets/images/갈매기.png',
-                      width: MediaQuery.of(context).size.width * 0.5,  // 크기를 화면 비율에 맞춤
+                      width: MediaQuery.of(context).size.width * 0.3,  // 크기를 화면 비율에 맞춤
                     ),
                   );
                 }).toList(),
               ),
           ),
-          const SizedBox(height: 16),
+          //const SizedBox(height: 16),
           const Text(
             "이번 달 계획 작성",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -137,11 +137,45 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () => _startWeeklyCycle(context),
-            child: const Text('다음'),
-          ),
+          _buildCustomButton(context, '다음', () {
+            _startWeeklyCycle(context);
+          }),
+          const SizedBox(height: 30),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 20,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'Roboto',  // 폰트 패밀리
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

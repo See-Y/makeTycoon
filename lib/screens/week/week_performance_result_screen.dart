@@ -55,6 +55,7 @@ class WeekPerformanceResultScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Column(
             crossAxisAlignment: CrossAxisAlignment.start,

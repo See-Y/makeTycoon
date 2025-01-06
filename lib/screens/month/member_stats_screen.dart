@@ -155,7 +155,7 @@ class _MemberCardState extends State<MemberCard> {
                     );
                   } else {
                     // 돈 차감 및 레벨업 페이지 이동
-                    widget.bandProvider.updateMoney(band.money - nextLevelCost);
+                    widget.bandProvider.updateMoney(-nextLevelCost);
                     Navigator.pushNamed(
                     context,
                     '/level-up',

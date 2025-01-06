@@ -58,6 +58,7 @@ class BandProvider with ChangeNotifier {
 
     // 6. 초기 지지율 설정
     ApprovalLogic.initializeApprovalRatings(bandMembers);
+    print("check InitialBand");
   }
 
   /// 밴드 생성
@@ -71,6 +72,7 @@ class BandProvider with ChangeNotifier {
       fans: 0,
       money: 100,
     );
+    print("check createInitialBand");
     notifyListeners();
   }
 
@@ -91,6 +93,7 @@ class BandProvider with ChangeNotifier {
   void addMember(Member newMember) {
     ApprovalLogic.addApprovalForNewMember(newMember, _band.members);
     _band.members.add(newMember);
+    print("check addmember");
     notifyListeners();
   }
 
@@ -98,6 +101,7 @@ class BandProvider with ChangeNotifier {
   void removeMember(Member member) {
     ApprovalLogic.removeApprovalForMember(member, _band.members);
     _band.members.remove(member);
+    print("check removeMember");
     notifyListeners();
   }
 
@@ -115,6 +119,7 @@ class BandProvider with ChangeNotifier {
     final index = _band.members.indexOf(member);
     if (index != -1) {
       _band.members[index].stats.setAll(0, updatedStats);
+      print("check updateMemberStats");
       notifyListeners();
     }
   }

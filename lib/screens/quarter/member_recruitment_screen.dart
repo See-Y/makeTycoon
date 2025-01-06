@@ -16,13 +16,15 @@ class MemberRecruitmentScreen extends StatefulWidget {
 
 class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
   late List<Member> availableMembers;
+  late BandProvider bandProvider;
 
   @override
   void initState() {
     super.initState();
     // 밴드에 이미 있는 멤버를 제외한 신규 멤버들을 생성
-    final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    bandProvider = Provider.of<BandProvider>(context, listen: false);
     availableMembers = _generateNewMembers(bandProvider);
+    print("recruit init checked");
   }
 
   List<Member> _getAllPotentialMembers() {
@@ -33,6 +35,7 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
       var newMember = MemberCreationLogic.createMember(Instrument(name: member['instrument']), false);
       potentialMembers.add(newMember);
     }
+    print("get all potential checked");
 
     return potentialMembers;
   }
@@ -45,6 +48,7 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
     List<Member> newMembers = allPotentialMembers.where((member) {
       return !bandProvider.band.members.contains(member);
     }).toList();
+    print("generated checked");
 
     return newMembers;
   }
@@ -53,6 +57,8 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
   @override
   Widget build(BuildContext context) {
     final bandProvider = Provider.of<BandProvider>(context, listen: false);
+
+    print("recruit build checked");
     return Scaffold(
       appBar: AppBar(title: const Text("신규 멤버 영입")),
       body: ListView.builder(

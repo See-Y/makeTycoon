@@ -7,15 +7,21 @@ class QuarterMainScreen extends StatelessWidget {
   const QuarterMainScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {return GlobalWrapper(
+  Widget build(BuildContext context) {
+    print("main page checked");
+
+    return GlobalWrapper(
       child: Scaffold(
+        appBar: AppBar(
+        title: Text("월"),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+      ),
         body: PageView(
+          controller: PageController(initialPage:1),
           children: [
-            _QuarterCycleMain(onNext: () {
-              Navigator.pushNamed(context, '/monthly-cycle');
-            }),
-            const MemberRemovalScreen(),
-            const MemberRecruitmentScreen(),
+            MemberRemovalScreen(),
+            _QuarterCycleMain(),
+            MemberRecruitmentScreen(),
           ],
         ),
       ),
@@ -23,26 +29,29 @@ class QuarterMainScreen extends StatelessWidget {
   }
 }
 
-class _QuarterCycleMain extends StatelessWidget {
-  final VoidCallback onNext;
-
-  const _QuarterCycleMain({required this.onNext});
+class _QuarterCycleMain extends StatefulWidget {
+  const _QuarterCycleMain();
 
   @override
-  Widget build(BuildContext context) {return PopScope(
-      canPop: false, // 뒤로가기 비활성화
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('분기 사이클 메인'),
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        ),
-        body: Center(
-          child: ElevatedButton(
-            onPressed: onNext,
-            child: const Text('다음'),
-          ),
-        ),
+  State<_QuarterCycleMain> createState() => _QuarterCycleMainState();
+}
+
+class _QuarterCycleMainState extends State<_QuarterCycleMain> {
+  @override
+  Widget build(BuildContext context) {
+    print("main build checked");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('분기 사이클 메인'),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       ),
-    );
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () => {
+            Navigator.pushNamed(context, '/monthly-cycle')
+        },
+        child: const Text('다음'),
+      ),
+    ),);
   }
 }

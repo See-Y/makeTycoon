@@ -80,7 +80,7 @@ class _MemberCardState extends State<MemberCard> {
                       member.image ?? 'assets/images/갈매기.png', // 기본 이미지 경로
                       width: 100,
                       height: 100,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -254,7 +254,7 @@ class _MemberCardState extends State<MemberCard> {
                 color: Colors.white,   // 텍스트 색상
                 fontSize: 20,          // 폰트 크기
                 fontWeight: FontWeight.bold, // 폰트 두께
-                fontFamily: 'Roboto',  // 폰트 패밀리
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
               ),
             ),
           ),

@@ -6,12 +6,19 @@ class GameStartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xFFAE2B0A),
         appBar: AppBar(
           title: const Text('스껄한 밴드를 만들어 보아요'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
-        body: Stack(
+        body: Column(
           children: [
+            SizedBox(height: 100),
+            Image.asset(
+              'assets/images/coverage.png',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.contain,
+            ),
             Positioned(
               bottom: 50, // 화면 아래에서부터의 거리
               left: MediaQuery.of(context).size.width * 0.125, // 가운데 정렬 (화면 너비의 1/8)
@@ -61,7 +68,7 @@ class GameStartScreen extends StatelessWidget {
                 color: Colors.white,   // 텍스트 색상
                 fontSize: 20,          // 폰트 크기
                 fontWeight: FontWeight.bold, // 폰트 두께
-                fontFamily: 'Roboto',  // 폰트 패밀리
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
               ),
             ),
           ),

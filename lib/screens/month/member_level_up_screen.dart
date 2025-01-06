@@ -58,7 +58,7 @@ class _MemberLevelUpScreenState extends State<MemberLevelUpScreen> {
             const SizedBox(height: 16),
             Text(
               "레벨업!",
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
             ),
             const SizedBox(height: 16),
             Text(
@@ -91,7 +91,7 @@ class _MemberLevelUpScreenState extends State<MemberLevelUpScreen> {
               );
             }),
             const SizedBox(height: 16),
-            Text("남은 포인트: $remainingPoints"),
+            Text("남은 포인트: $remainingPoints", style: const TextStyle(fontFamily: 'DungGeunMo'),),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: remainingPoints == 0
@@ -104,7 +104,7 @@ class _MemberLevelUpScreenState extends State<MemberLevelUpScreen> {
                 Navigator.pop(context);
               }
                   : null,
-              child: const Text("확인"),
+              child: const Text("확인", style: const TextStyle(fontFamily: 'DungGeunMo')),
             ),
           ],
         ),

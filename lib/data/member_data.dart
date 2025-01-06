@@ -109,7 +109,7 @@ final List<Map<String, dynamic>> memberData = [
       value: 5,
     ),
     "image": "assets/images/너구리.png",
-    "position": [0.0, -0.1, 4.0],
+    "position": [-0.8, 0.8, 4.0],
   },
   {
     "instrument": "캐스터네츠",

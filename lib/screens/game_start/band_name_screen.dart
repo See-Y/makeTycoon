@@ -39,25 +39,57 @@ class BandNameScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
-            ElevatedButton(
-              onPressed: () {
-                final bandName = _nameController.text.trim();
-                if (bandName.isNotEmpty) {
-                  Provider.of<BandProvider>(context, listen: false).createInitialBand(bandName); // 새로운 Band 생성
-                  GameManager().setavailableMember(context);
-                  Navigator.pushNamed(context, '/monthly-cycle');
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('밴드 이름을 입력해주세요!')),
-                  );
-                }
-              },
-              child: const Text('시작하기!'),
-            ),
+            _buildCustomButton(context, '밴드 출격!', () {
+              // 처음부터 버튼 클릭 시 실행할 함수
+              final bandName = _nameController.text.trim();
+              if (bandName.isNotEmpty) {
+                Provider.of<BandProvider>(context, listen: false).createInitialBand(bandName); // 새로운 Band 생성
+                GameManager().setavailableMember(context);
+                Navigator.pushNamed(context, '/monthly-cycle');
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('밴드 이름을 입력해주세요!')),
+                );
+              }
+            }),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.75, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 20,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'Roboto',  // 폰트 패밀리
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

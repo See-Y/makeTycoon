@@ -16,18 +16,23 @@ class MemberRecruitmentScreen extends StatefulWidget {
 }
 
 class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
+
   List<Member> availableMembers = GameManager().availableMembers;
 
   @override
   void initState() {
     super.initState();
     // 밴드에 이미 있는 멤버를 제외한 신규 멤버들을 생성
+    
   }
+
 
 
   @override
   Widget build(BuildContext context) {
     final bandProvider = Provider.of<BandProvider>(context, listen: false);
+
+    print("recruit build checked");
     return Scaffold(
       appBar: AppBar(title: const Text("신규 멤버 영입")),
       body: Consumer<BandProvider>(

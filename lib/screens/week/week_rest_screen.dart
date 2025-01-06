@@ -10,7 +10,7 @@ class WeekRestScreen extends StatelessWidget {
   Widget build(BuildContext context) {return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${GameManager().currentMonth}주차: 휴식'),
+          title: Text('${GameManager().currentWeek}주차: 휴식'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
@@ -41,7 +41,7 @@ class WeekRestScreen extends StatelessWidget {
 
   void _navigateToNextWeek(BuildContext context) {
     final manager = MonthlyDataManager();
-    final nextWeekActivity = manager.getWeeklyActivity(GameManager().currentWeek - 1);
+    final nextWeekActivity = manager.getWeeklyActivity(GameManager().currentWeek - 1)?.activityType;
 
     if (nextWeekActivity == "공연") {
       Navigator.pushNamed(context, '/week-performance');

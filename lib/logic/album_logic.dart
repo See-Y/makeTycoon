@@ -10,6 +10,7 @@ class AlbumLogic {
   // 팬 증가량(fanBoost) 계산, 영향을 주는 것: 멤버 스탯 총합, 악기 스탯 총합, 리더 스킬, 랜덤 가중치(명반 탄생 확률)
   static final Random random = Random();
   static final double goodalbum = random.nextDouble(); //얼마나 명반인지
+
   static int calculateFanBoost(BandProvider bandProvider) {
     final double baseFanBoost = 40 + (goodalbum * 20); // 40 ~ 60
     List<int> totalStats=bandProvider.getTotalMemberStats(); //멤버 스탯 총합 어레이

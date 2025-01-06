@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../game_manager.dart';
+import '../../logic/monthly_data_manager.dart';
 import '../../widget/global_wrapper.dart';
 import 'package:provider/provider.dart';
 import '../../providers/band_provider.dart';
@@ -11,14 +12,15 @@ class MonthSummaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameManager = GameManager();
-    BandProvider bandProvider=Provider.of<BandProvider>(context);
-    Band band=bandProvider.band;
+    BandProvider bandProvider = Provider.of<BandProvider>(context);
+    Band band = bandProvider.band;
+    final monthlyActivities = MonthlyDataManager().weeklyActivities;
+
     return GlobalWrapper(
-        child:  Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           title: const Text('월간 결산'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -30,21 +32,114 @@ class MonthSummaryScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              Text('총 수입: ${band.albums.fold(0, (sum, album) => sum + album.monthlyIncome)}만 원'),
-              Text('새로운 팬 수: ${band.albums.fold(0, (sum, album) => sum + album.fanBoost)}명'),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: () {
-                  bandProvider.applyMonthlySummary();
-                  if (gameManager.isQuarterStart()) {
-                  // 분기 시작 시 분기 화면으로 이동
-                    Navigator.pushNamed(context, '/quarter-main');
-                  } else {
-                  // 그렇지 않으면 월간 사이클로 돌아감
-                    Navigator.pushReplacementNamed(context, '/monthly-cycle');
-                  }
-                },
-                child: const Text('다음'),
+              const Text(
+                '앨범으로 인한 결과',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Card(
+                elevation: 4,
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ListTile(
+                  title: Text(
+                    '고정 수입: ${band.albums.fold(0, (sum, album) => sum + album.monthlyIncome)}만 원',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  subtitle: Text(
+                    '앨범으로 증가한 총 팬 수: ${band.albums.fold(0, (sum, album) => sum + album.fanBoost)}명',
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                '주차별 활동 요약',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: monthlyActivities.length,
+                  itemBuilder: (context, index) {
+                    final activity = monthlyActivities[index];
+                    if (activity == null) {
+                      return Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(vertical: 6.0),
+                        child: ListTile(
+                          title: Text(
+                            "제 ${index + 1} 주차: 활동 없음",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (activity.activityType == "앨범 출시") {
+                      return Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(vertical: 6.0),
+                        child: ListTile(
+                          title: Text(
+                            "제 ${index + 1} 주차: ${activity.activityType}",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            "앨범 이름: ${activity.albumName ?? ''}\n"
+                                "${activity.fanChange != null ? '팬 증가: ${activity.fanChange!.toInt()}명\n' : ''}"
+                                "${activity.revenue != null ? '고정수익: ${activity.revenue!.toInt()}만 원' : ''}",
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (activity.activityType == "공연") {
+                      return Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(vertical: 6.0),
+                        child: ListTile(
+                          title: Text(
+                            "제 ${index + 1} 주차: ${activity.activityType}",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            "공연장: ${activity.venue?.name ?? ''}\n"
+                                "티켓 가격: ${activity.ticketPrice?.toInt()}원\n"
+                                "관객 수: ${activity.audienceCount ?? 0}명\n"
+                                "팬 수 변화: ${activity.fanChange ?? 0}명\n"
+                                "수익: ${activity.revenue?.toInt()}만 원\n"
+                                "성공 여부: ${activity.success != null && activity.success! >= 1.0 ? '성공' : '실패'}",
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Card(
+                      elevation: 2,
+                      margin: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: ListTile(
+                        title: Text(
+                          "제 ${index + 1} 주차: ${activity.activityType}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    bandProvider.applyMonthlySummary();
+                    MonthlyDataManager().resetMonthlyData();
+                    if (gameManager.isQuarterStart()) {
+                      Navigator.pushNamed(context, '/quarter-main');
+                    } else {
+                      Navigator.pushReplacementNamed(context, '/monthly-cycle');
+                    }
+                  },
+                  child: const Text('다음'),
+                ),
               ),
             ],
           ),

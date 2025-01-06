@@ -41,6 +41,8 @@ class WeeklyActivity {
   final int? fanChange;
   final double? revenue;
   final double? success;
+  final int? albumWeek;
+  final String? albumName;
 
   WeeklyActivity({
     required this.activityType,
@@ -50,5 +52,7 @@ class WeeklyActivity {
     this.fanChange,
     this.revenue,
     this.success,
+    this.albumWeek,
+    this.albumName,
   });
 }

@@ -19,7 +19,7 @@ class WeekAlbumScreen extends StatelessWidget {
 
       child: Scaffold(
         appBar: AppBar(
-          title: Text('${GameManager().currentMonth}주차: 음반'),
+          title: Text('${GameManager().currentWeek}주차: 음반'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Center(
@@ -27,6 +27,7 @@ class WeekAlbumScreen extends StatelessWidget {
             onPressed: () {
               bandProvider.incrementAlbumWorkWeeks();
               if(isAlbumReleaseWeek){
+                _saveAlbumWorkData(context, bandProvider.albumWorkWeeks);
                 Navigator.pushNamed(context, '/album-release');
               }
               else{
@@ -42,6 +43,24 @@ class WeekAlbumScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _saveAlbumWorkData(BuildContext context, int workingWeek) {
+    final gameManager = GameManager();
+    MonthlyDataManager().setWeeklyActivity(
+      gameManager.currentWeek - 1,
+      WeeklyActivity(
+        activityType: "음반 작업",
+        venue: null,
+        ticketPrice: null,
+        audienceCount: null,
+        fanChange: null,
+        revenue: null,
+        success: null,
+        albumWeek: workingWeek,
+      ),
+    );
+  }
+
   void _onActivityComplete(BuildContext context) {
     final gameManager = GameManager();
 

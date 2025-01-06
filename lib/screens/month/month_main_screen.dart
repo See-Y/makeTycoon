@@ -97,7 +97,9 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
                   title: Text("${index + 1}주차 활동: ${MonthlyDataManager().getWeeklyActivity(index)?.activityType ?? "선택 안됨"}"),
                   trailing: DropdownButton<String>(
                     hint: const Text("활동 선택"),
-                    value: MonthlyDataManager().getWeeklyActivity(index)?.activityType,
+                    value: activityOptions.contains(MonthlyDataManager().getWeeklyActivity(index)?.activityType)
+                        ? MonthlyDataManager().getWeeklyActivity(index)?.activityType
+                        : null,
                     items: activityOptions.map((activity) {
                       return DropdownMenuItem(
                         value: activity,

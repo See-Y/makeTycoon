@@ -35,13 +35,33 @@ class _AlbumReleaseScreenState extends State<AlbumReleaseScreen> {
     }
 
     final bandProvider = Provider.of<BandProvider>(context, listen: false);
+    final text = albumNameController.text;
+    final fanBoost = AlbumLogic.calculateFanBoost(bandProvider);
+    final fixedIncome = AlbumLogic.calculateMonthlyIncome(bandProvider);
+
     bandProvider.addAlbum(
-      albumNameController.text,
-      AlbumLogic.calculateFanBoost(bandProvider),
-      AlbumLogic.calculateMonthlyIncome(bandProvider),
+      text,
+      fanBoost,
+      fixedIncome,
       _albumArt?.path, // 앨범 아트 경로
     );
     bandProvider.resetAlbumWorkWeeks();
+
+    final gameManager = GameManager();
+
+    MonthlyDataManager().setWeeklyActivity(
+      gameManager.currentWeek - 1,
+      WeeklyActivity(
+        activityType: "앨범 출시",
+        venue: null,
+        ticketPrice: null,
+        audienceCount: null,
+        fanChange: fanBoost,
+        revenue: fixedIncome.toDouble(),
+        success: null,
+        albumName: text,
+      ),
+    );
 
     _onActivityComplete(context);
   }

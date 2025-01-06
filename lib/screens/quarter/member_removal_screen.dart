@@ -6,6 +6,7 @@ class MemberRemovalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     print("removal build checked");
     return Scaffold(
         appBar: AppBar(
@@ -14,7 +15,9 @@ class MemberRemovalScreen extends StatelessWidget {
         ),
         body: Center(
           child: Text('멤버 탈퇴 화면'),
+
         )
     );
+
   }
 }

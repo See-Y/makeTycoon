@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/game_manager.dart';
 import 'package:make_tycoon/logic/member_creation_logic.dart';
 import 'package:provider/provider.dart';
 import '../../models/member.dart';  // 멤버 모델
@@ -15,43 +16,16 @@ class MemberRecruitmentScreen extends StatefulWidget {
 }
 
 class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
-  late List<Member> availableMembers;
-  late BandProvider bandProvider;
+
+  List<Member> availableMembers = GameManager().availableMembers;
 
   @override
   void initState() {
     super.initState();
     // 밴드에 이미 있는 멤버를 제외한 신규 멤버들을 생성
-    bandProvider = Provider.of<BandProvider>(context, listen: false);
-    availableMembers = _generateNewMembers(bandProvider);
-    print("recruit init checked");
+    
   }
 
-  List<Member> _getAllPotentialMembers() {
-
-    List<Member> potentialMembers = [];
-
-    for (var member in memberData){
-      var newMember = MemberCreationLogic.createMember(Instrument(name: member['instrument']), false);
-      potentialMembers.add(newMember);
-    }
-    print("get all potential checked");
-
-    return potentialMembers;
-  }
-
-  List<Member> _generateNewMembers(BandProvider bandProvider) {
-    // 가능성 있는 멤버 목록을 가져와
-    List<Member> allPotentialMembers = _getAllPotentialMembers();
-
-    // 이미 밴드에 있는 멤버를 제외
-    List<Member> newMembers = allPotentialMembers.where((member) {
-      return !bandProvider.band.members.contains(member);
-    }).toList();
-    print("generated checked");
-
-    return newMembers;
-  }
 
 
   @override
@@ -61,63 +35,80 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
     print("recruit build checked");
     return Scaffold(
       appBar: AppBar(title: const Text("신규 멤버 영입")),
-      body: ListView.builder(
-        itemCount: availableMembers.length,
-        itemBuilder: (context, index) {
-          final member = availableMembers[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(color: Colors.black26, blurRadius: 6, spreadRadius: 2),
-                ],
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: member.image != null
-                      ? Image.asset(
-                    member.image!,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  )
-                      : Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey,
-                    child: const Icon(
-                      Icons.music_note,
+      body: Consumer<BandProvider>(
+        builder: (context, bandProvider, child) {
+          return ListView.builder(
+            itemCount: availableMembers.length,
+            itemBuilder: (context, index) {
+              final member = availableMembers[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 4,
+                  child: Container(
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      size: 50,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // 멤버 사진
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                              image: member.image != null
+                                  ? FileImage(File(member.image!))
+                                  : AssetImage('assets/placeholder.png') as ImageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        // 멤버 정보
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                member.name,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text('동물: ${member.animalType}'),
+                              Text('악기: ${member.instrument}'),
+                              Text('MBTI: ${member.mbti}'),
+                            ],
+                          ),
+                        ),
+                        // 영입 버튼
+                        ElevatedButton(
+                          onPressed: () {
+                            GameManager().addMember(context, member);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Text('영입'),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                title: Text(member.name),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('동물: ${member.animalType}'),
-                    Text('${member.instrument}'),
-                    Text('MBTI: ${member.mbti}'),
-                    Text('리더 패시브 효과 1: ${member.leaderEffect1.description}'),
-                    Text('리더 패시브 효과 2: ${member.leaderEffect2.description}'),
-                  ],
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    // 밴드에 멤버 추가
-                    bandProvider.addMember(member);
-                    // 추가 후 화면 전환 또는 성공 메시지 표시
-                  },
-                ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:make_tycoon/widget/global_wrapper.dart';
 import '../../logic/monthly_data_manager.dart';
 import '../../game_manager.dart';
+import 'package:provider/provider.dart';
+import '../../providers/band_provider.dart';
 
 class WeekPerformanceResultScreen extends StatelessWidget {
   const WeekPerformanceResultScreen({super.key});
@@ -35,11 +37,13 @@ class WeekPerformanceResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentWeek = GameManager().currentWeek - 1;
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
     final weeklyActivity = MonthlyDataManager().getWeeklyActivity(currentWeek);
 
     if (weeklyActivity == null || weeklyActivity.activityType != "공연") {
       return const Center(child: Text("공연 정보가 없습니다."));
     }
+
 
     final venue = weeklyActivity.venue!;
     final ticketPrice = weeklyActivity.ticketPrice!;
@@ -47,6 +51,10 @@ class WeekPerformanceResultScreen extends StatelessWidget {
     final fanChange = weeklyActivity.fanChange;
     final revenue = weeklyActivity.revenue!;
     final success = weeklyActivity.success;
+
+    bandProvider.updateLeaderApprovalRatings(success!>=0);
+
+
 
     return GlobalWrapper(
       child: Scaffold(

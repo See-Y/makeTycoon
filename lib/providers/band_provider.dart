@@ -232,6 +232,36 @@ class BandProvider with ChangeNotifier {
     return rent;
   }
 
+  void selectNewLeader(){
+    Member leader= _band.members[0];
+    int highestSupportSum = -9999;
+
+    for (var member in _band.members){
+      int totalSupport = member.approvalRatings.values.reduce((a, b) => a + b);
+      if(totalSupport > highestSupportSum){
+        highestSupportSum = totalSupport;
+        leader = member;
+      }
+    }
+    _band.leader=leader;
+  }
+
+  void updateLeaderApprovalRatings(bool isSuccess) {
+    int change = isSuccess ? 1 : -3;  // 성공 시 지지율 증가 (+10), 실패 시 감소 (-30)
+
+    for (var member in _band.members) {
+      if (member != _band.leader) {  // 리더는 제외
+        member.approvalRatings.update(
+          _band.leader,
+              (value) => (value + change).clamp(-10, 10),  // 범위를 -100 ~ 100으로 제한
+          ifAbsent: () => change,  // 처음 지지율이 없으면 change 값으로 설정
+        );
+      }
+    }
+    notifyListeners();
+  }
+
+
 
 
 

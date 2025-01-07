@@ -135,6 +135,7 @@ class MonthSummaryScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/pasan-ending');
                   }
                   else if (gameManager.isQuarterStart()) {
+                    bandProvider.selectNewLeader();
                     Navigator.pushNamed(context, '/quarter-main');
                   } else {
                     Navigator.pushReplacementNamed(context, '/monthly-cycle');

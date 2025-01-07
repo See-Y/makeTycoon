@@ -15,9 +15,12 @@ class InstrumentStatsScreen extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('악기 스탯'),
-          automaticallyImplyLeading: false,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(25.0),
+          child: AppBar(
+            title: const Text('악기 스탯'),
+            automaticallyImplyLeading: false,
+          ),
         ),
         body: PageView.builder(
           scrollDirection: Axis.vertical, // 스크롤 방향을 세로로 변경
@@ -51,21 +54,51 @@ class InstrumentStatsScreen extends StatelessWidget {
                       Text("공연 효과: ${instrument.effects['performanceBoost']}"),
                       Text("음반 효과: ${instrument.effects['albumQualityBoost']}"),
                       const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
+                      _buildCustomButton(context, '강화하기 : ${instrumentEnhanceCosts[instrument.rarity]}만 원', () {
                           final message = bandProvider.enhanceInstrument(member, instrument);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(message)),
                           );
-                        },
-                        child: Text("강화하기 : ${instrumentEnhanceCosts[instrument.rarity]}만 원"),
-                      ),
+                      }),
                     ],
                   ),
                 ),
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 15,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
+              ),
+            ),
+          ),
         ),
       ),
     );

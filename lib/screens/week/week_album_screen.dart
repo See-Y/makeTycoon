@@ -26,7 +26,6 @@ class WeekAlbumScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Spacer(),
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
@@ -35,12 +34,12 @@ class WeekAlbumScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              SizedBox(height: 60),  // 이미지와 텍스트 사이의 간격
+              SizedBox(height: 20),  // 이미지와 텍스트 사이의 간격
               Text(
                 '우리 밴드는 음악 작업 중...',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
               ),
-              SizedBox(height: 60),  // 텍스트와 버튼 사이의 간격
+              SizedBox(height: 20),  // 텍스트와 버튼 사이의 간격
               _buildCustomButton(context, '다음', () {
                 bandProvider.incrementAlbumWorkWeeks();
                 if(isAlbumReleaseWeek){
@@ -54,7 +53,6 @@ class WeekAlbumScreen extends StatelessWidget {
                   _onActivityComplete(context);
                 }
               }),
-              Spacer(),
             ],
           ),
         ),

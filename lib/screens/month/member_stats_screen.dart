@@ -14,9 +14,12 @@ class MemberStatsScreen extends StatelessWidget {
     final band = bandProvider.band;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('멤버 둘러보기'),
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(25.0),
+        child: AppBar(
+          title: const Text('멤버 둘러보기'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+        ),
       ),
       body: PageView.builder(
         scrollDirection: Axis.vertical, // 스크롤 방향을 세로로 변경
@@ -91,7 +94,7 @@ class _MemberCardState extends State<MemberCard> {
                         isLeader ? "리더: ${member.name} (${member.instrument.name})" : "${member.name} (${member.instrument.name})",
                         style: TextStyle(
                           fontWeight: isLeader ? FontWeight.bold : FontWeight.normal,
-                          fontSize: 18,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -227,6 +230,8 @@ class _MemberCardState extends State<MemberCard> {
         );
       }).toList(),
     );
+
+
   }
 
   Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {

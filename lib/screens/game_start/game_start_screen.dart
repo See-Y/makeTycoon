@@ -11,34 +11,37 @@ class GameStartScreen extends StatelessWidget {
           title: const Text('스껄한 밴드를 만들어 보아요'),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
-        body: Column(
-          children: [
-            SizedBox(height: 100),
-            Image.asset(
-              'assets/images/coverage.png',
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.contain,
-            ),
-            Positioned(
-              bottom: 50, // 화면 아래에서부터의 거리
-              left: MediaQuery.of(context).size.width * 0.125, // 가운데 정렬 (화면 너비의 1/8)
-              right: MediaQuery.of(context).size.width * 0.125,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildCustomButton(context, '처음부터', () {
-                  // 처음부터 버튼 클릭 시 실행할 함수
-                    Navigator.pushNamed(context, '/band-name'); // 게임 시작 로직
-                  }),
-                  SizedBox(height: 16), // 버튼 사이 간격
-                  _buildCustomButton(context, '계속하기', () {
-                  // 계속하기 버튼 클릭 시 실행할 함수
-                    Navigator.pushNamed(context, '/continue-game'); // 계속하기 로직
-                  }),
-                ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/coverage.png',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.contain,
               ),
-            ),
-          ],
+              Positioned(
+                bottom: 50, // 화면 아래에서부터의 거리
+                left: MediaQuery.of(context).size.width * 0.125, // 가운데 정렬 (화면 너비의 1/8)
+                right: MediaQuery.of(context).size.width * 0.125,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildCustomButton(context, '처음부터', () {
+                  // 처음부터 버튼 클릭 시 실행할 함수
+                      Navigator.pushNamed(context, '/band-name'); // 게임 시작 로직
+                    }),
+                    SizedBox(height: 16), // 버튼 사이 간격
+                    _buildCustomButton(context, '계속하기', () {
+                  // 계속하기 버튼 클릭 시 실행할 함수
+                      Navigator.pushNamed(context, '/continue-game'); // 계속하기 로직
+                    }),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
     );
   }

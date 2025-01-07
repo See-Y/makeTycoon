@@ -22,9 +22,12 @@ class MonthMainScreen extends StatelessWidget {
 
     return GlobalWrapper(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("${currentMonth}월"),
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30.0),
+          child: AppBar(
+            title: Text("${currentMonth}월"),
+            automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+          ),
         ),
         body: PageView(
           controller: PageController(initialPage: 2),  // 시작 페이지를 2로 설정
@@ -88,15 +91,22 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-              height: MediaQuery.of(context).size.height / 2.3,
+              height: MediaQuery.of(context).size.height / 2.5,
               child: Stack(
                 children: sortedMembers  // elevation 기준 정렬
                 .map((member) {
                   return Align(
                     alignment: Alignment(member.position![0], member.position![1]),  // Alignment 기반 위치
-                    child: Image.asset(
-                      member.image ?? 'assets/images/갈매기.png',
-                      width: MediaQuery.of(context).size.width * 0.3,  // 크기를 화면 비율에 맞춤
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),  // 둥근 모서리 적용 (선택 사항)
+                        image: DecorationImage(
+                          image: AssetImage(member.image ?? 'assets/images/갈매기.png',),
+                          fit: BoxFit.contain,  // 이미지 비율을 맞추거나 자르기
+                        ),
+                      ),
                     ),
                   );
                 }).toList(),

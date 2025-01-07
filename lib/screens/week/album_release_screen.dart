@@ -69,11 +69,12 @@ class _AlbumReleaseScreenState extends State<AlbumReleaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('음반 발매')),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(title: const Text('음반 발매가 가능합니다!'), automaticallyImplyLeading: false,),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextField(
               controller: albumNameController,
@@ -84,23 +85,22 @@ class _AlbumReleaseScreenState extends State<AlbumReleaseScreen> {
               onTap: _pickAlbumArt,
               child: _albumArt == null
                   ? Container(
-                height: 150,
-                width: double.infinity,
+                height: MediaQuery.of(context).size.width*0.8,
+                width: MediaQuery.of(context).size.width*0.8,
                 color: Colors.grey[300],
                 child: const Center(child: Text('앨범 아트를 선택하세요')),
               )
                   : Image.file(
                 _albumArt!,
-                height: 150,
-                width: double.infinity,
+                height: MediaQuery.of(context).size.width*0.8,
+                width: MediaQuery.of(context).size.width*0.8,
                 fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _releaseAlbum,
-              child: const Text('음반 발매하기'),
-            ),
+            _buildCustomButton(context, '음반 발매하기', () {
+              _releaseAlbum();
+            }),
           ],
         ),
       ),
@@ -133,5 +133,39 @@ class _AlbumReleaseScreenState extends State<AlbumReleaseScreen> {
     } else if (nextWeekActivity == "휴식") {
       Navigator.pushNamed(context, '/week-rest');
     }
+  }
+
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 20,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

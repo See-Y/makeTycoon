@@ -24,6 +24,7 @@ class GameManager {
 
   late BandProvider bandProvider;
 
+  String token = '';
 
   List<Member> _getAllPotentialMembers() {
 

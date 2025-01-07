@@ -14,9 +14,12 @@ class MemberStatsScreen extends StatelessWidget {
     final band = bandProvider.band;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('멤버 둘러보기'),
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(25.0),
+        child: AppBar(
+          title: const Text('멤버 둘러보기'),
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+        ),
       ),
       body: PageView.builder(
         scrollDirection: Axis.vertical, // 스크롤 방향을 세로로 변경
@@ -72,19 +75,35 @@ class _MemberCardState extends State<MemberCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 이름 및 리더 여부
-              Text(
-                isLeader ? "리더: ${member.name}" : member.name,
-                style: TextStyle(
-                  fontWeight: isLeader ? FontWeight.bold : FontWeight.normal,
-                  fontSize: 18,
-                ),
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      member.image ?? 'assets/images/갈매기.png', // 기본 이미지 경로
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:[
+                      Text(
+                        isLeader ? "리더: ${member.name} (${member.instrument.name})" : "${member.name} (${member.instrument.name})",
+                        style: TextStyle(
+                          fontWeight: isLeader ? FontWeight.bold : FontWeight.normal,
+                          fontSize: 15,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text("레벨: $level", style: const TextStyle(fontSize: 16)),
+                      Text("MBTI: $mbti", style: const TextStyle(fontSize: 16)), // 레벨 및 MBTI 표시
+                    ]
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 8),
-
-              // 레벨 및 MBTI 표시
-              Text("레벨: $level", style: const TextStyle(fontSize: 16)),
-              Text("MBTI: $mbti", style: const TextStyle(fontSize: 16)),
 
               const SizedBox(height: 8),
 
@@ -126,31 +145,28 @@ class _MemberCardState extends State<MemberCard> {
               ),
               if (showApproval) _buildApprovalGraph(member, band),
 
-              const Spacer(),
+              const Spacer(flex: 2),
 
               // 레벨업 버튼
               Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (band.money < nextLevelCost) {
-                      // 돈 부족 알림
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("돈이 부족합니다.")),
-                      );
-                    } else {
-                      // 돈 차감 및 레벨업 페이지 이동
-                      widget.bandProvider.updateMoney(band.money - nextLevelCost);
-                      Navigator.pushNamed(
-                        context,
-                        '/level-up',
-                        arguments: member,
-                      );
-                    }
-                  },
-                  child: Text("레벨업 비용: ${nextLevelCost}만 원"),
-                ),
+                child: _buildCustomButton(context, '레벨업 비용: ${nextLevelCost}만 원', () {
+                  // 계속하기 버튼 클릭 시 실행할 함수
+                  if (band.money < nextLevelCost) {
+                    // 돈 부족 알림
+                    ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("돈이 부족합니다.")),
+                    );
+                  } else {
+                    // 돈 차감 및 레벨업 페이지 이동
+                    widget.bandProvider.updateMoney(-nextLevelCost);
+                    Navigator.pushNamed(
+                    context,
+                    '/level-up',
+                    arguments: member,
+                    );
+                  }
+                }),
               ),
-
               const SizedBox(height: 16),
             ],
           ),
@@ -213,6 +229,42 @@ class _MemberCardState extends State<MemberCard> {
           ],
         );
       }).toList(),
+    );
+
+
+  }
+
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.75, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 20,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

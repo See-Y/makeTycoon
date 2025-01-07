@@ -15,6 +15,7 @@ class Member {
   bool isLeader; // 리더 여부
   Map<Member, int> approvalRatings; // 다른 멤버들에 대한 지지율
   String? image;
+  List<double>? position;
 
   Member({
     required this.name,
@@ -28,6 +29,7 @@ class Member {
     this.isLeader = false,
     Map<Member, int>? approvalRatings,
     this.image=null,
+    this.position=null,
   }) : approvalRatings = approvalRatings ?? {};
 
   // 스탯 Getter: 리더 효과가 적용된 값을 반환

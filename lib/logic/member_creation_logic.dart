@@ -53,6 +53,8 @@ class MemberCreationLogic {
       isLeader: isLeader,
       leaderEffect1: data["leaderEffect1"],
       leaderEffect2: data["leaderEffect2"],
+      image: data["image"],
+      position: List<double>.from(data["position"]),
     );
   }
 }

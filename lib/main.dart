@@ -38,6 +38,10 @@ class BandSimulationApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => BandProvider(),
       child: MaterialApp(
+          theme: ThemeData(
+            // 기본 폰트 설정
+            fontFamily: 'DungGeunMo',  // 'MyFont'는 pubspec.yaml에서 정의한 폰트 이름
+          ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/game-start',
         routes: {

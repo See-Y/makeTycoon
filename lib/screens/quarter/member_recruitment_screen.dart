@@ -34,7 +34,8 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
 
     print("recruit build checked");
     return Scaffold(
-      appBar: AppBar(title: const Text("신규 멤버 영입")),
+      appBar: AppBar(title: const Text("신규 멤버 영입"),
+        automaticallyImplyLeading: false,),
       body: Consumer<BandProvider>(
         builder: (context, bandProvider, child) {
           return ListView.builder(
@@ -58,17 +59,13 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // 멤버 사진
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              image: member.image != null
-                                  ? FileImage(File(member.image!))
-                                  : AssetImage('assets/placeholder.png') as ImageProvider,
-                              fit: BoxFit.cover,
-                            ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.asset(
+                            member.image ?? 'assets/images/갈매기.png', // 기본 이미지 경로
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.contain,
                           ),
                         ),
                         SizedBox(width: 16),
@@ -86,23 +83,29 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
                               ),
                               SizedBox(height: 4),
                               Text('동물: ${member.animalType}'),
-                              Text('악기: ${member.instrument}'),
-                              Text('MBTI: ${member.mbti}'),
+                              Text('포지션: ${member.instrument.name}'),
+                              Text('MBTI: ${mbti(member)}'),
                             ],
                           ),
                         ),
                         // 영입 버튼
-                        ElevatedButton(
-                          onPressed: () {
-                            GameManager().addMember(context, member);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        Column(
+                          children:[
+                            ElevatedButton(
+                              onPressed: () {
+                                GameManager().addMember(context, member);
+                                bandProvider.updateMoney(-50);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text('영입'),
                             ),
-                          ),
-                          child: Text('영입'),
-                        ),
+                            Text('50만 원'),
+                          ]
+                        )
                       ],
                     ),
                   ),
@@ -114,4 +117,14 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
       ),
     );
   }
+
+  String mbti(Member member) {
+    return [
+      member.mbti[0] >= 0 ? 'E' : 'I',
+      member.mbti[1] >= 0 ? 'N' : 'S',
+      member.mbti[2] >= 0 ? 'F' : 'T',
+      member.mbti[3] >= 0 ? 'P' : 'J',
+    ].join('');
+  }
+
 }

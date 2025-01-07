@@ -54,10 +54,15 @@ class WeekPerformanceResultScreen extends StatelessWidget {
           title: Text('${GameManager().currentWeek}주차: 공연 결과'),
           automaticallyImplyLeading: false,
         ),
-        body: Column(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text("공연장: ${venue.name}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
@@ -73,13 +78,47 @@ class WeekPerformanceResultScreen extends StatelessWidget {
               Text("티켓 가격: ${(ticketPrice*10000).toStringAsFixed(0)} 원"),
             ],
           ),
-            ElevatedButton(
-              onPressed: () {
+            const SizedBox(height: 10),
+            Center(
+              child: _buildCustomButton(context, '다음', () {
                 _onActivityComplete(context);
-              },
-              child: const Text('다음'),
-            )
-          ]
+              }),
+            ),
+          ],
+        ),
+        ),
+      ),
+    );
+  }
+  Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5, // 화면의 3/4 너비
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 16), // 버튼 높이
+          decoration: BoxDecoration(
+            color: Colors.black, // 버튼 배경 색상
+            borderRadius: BorderRadius.circular(25), // 둥근 직사각형
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2), // 그림자 색상
+                offset: Offset(0, 5), // 그림자 위치 (X, Y)
+                blurRadius: 10, // 그림자 흐림 정도
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,   // 텍스트 색상
+                fontSize: 15,          // 폰트 크기
+                fontWeight: FontWeight.bold, // 폰트 두께
+                fontFamily: 'DungGeunMo',  // 폰트 패밀리
+              ),
+            ),
+          ),
         ),
       ),
     );

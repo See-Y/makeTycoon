@@ -11,7 +11,14 @@ class MonthlyDataManager {
 
   // 특정 주의 활동 설정
   void setWeeklyActivity(int week, WeeklyActivity activity) {
-    weeklyActivities[week] = activity;
+    if(week<=2 && activity.activityType=="공연"){
+      weeklyActivities[week] = activity;
+      weeklyActivities[week+1]=WeeklyActivity(activityType: "휴식");
+    }
+    if(week>0 && weeklyActivities[week-1]?.activityType=="공연"){
+      weeklyActivities[week]=WeeklyActivity(activityType: "휴식");
+    }
+    else weeklyActivities[week] = activity;
   }
 
   // 특정 주의 활동 가져오기

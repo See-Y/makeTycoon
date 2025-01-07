@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../models/band.dart';
 import '../../models/member.dart';
 import '../../providers/band_provider.dart'; // band_provider import
+import 'dart:math';
 
 
 class MonthMainScreen extends StatelessWidget {
@@ -52,8 +53,19 @@ class _MonthCycleMain extends StatefulWidget {
   State<_MonthCycleMain> createState() => _MonthCycleMainState();
 }
 
-class _MonthCycleMainState extends State<_MonthCycleMain> {
+class _MonthCycleMainState extends State<_MonthCycleMain> with SingleTickerProviderStateMixin {
   final List<String> activityOptions = ["공연", "음반 작업", "휴식"];
+  List<String> selectedActivities = List.filled(4, ""); // 각 주차의 활동을 저장
+
+  void _selectActivity(int weekIndex, String activity) {
+    setState(() {
+      selectedActivities[weekIndex] = activity;
+      // 공연을 선택한 경우 다음 주차 활동은 휴식으로 고정
+      if (activity == "공연" && weekIndex < selectedActivities.length - 1) {
+        selectedActivities[weekIndex + 1] = "휴식";
+      }
+    });
+  }
 
   void _startWeeklyCycle(BuildContext context) {
     final manager = MonthlyDataManager();
@@ -83,6 +95,27 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
     }
   }
 
+  late AnimationController _controller;
+  late Animation<double> _rotationAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),  // 한 번 흔들리는 데 걸리는 시간
+      vsync: this,
+    )..repeat(reverse: true);  // 앞뒤로 반복
+
+    _rotationAnimation = Tween(begin: -5 * pi / 180, end: 5 * pi / 180)  // -5도에서 5도까지 회전
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Band bandModel = Provider.of<BandProvider>(context).band;
@@ -99,18 +132,27 @@ class _MonthCycleMainState extends State<_MonthCycleMain> {
                 .map((member) {
                   return Align(
                     alignment: Alignment(member.position![0], member.position![1]),  // Alignment 기반 위치
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),  // 둥근 모서리 적용 (선택 사항)
-                        image: DecorationImage(
-                          image: AssetImage(member.image ?? 'assets/images/갈매기.png',),
-                          fit: BoxFit.contain,  // 이미지 비율을 맞추거나 자르기
-                        ),
-                      ),
+                    child: AnimatedBuilder(
+                      animation: _rotationAnimation,  // 회전 애니메이션
+                      builder: (context, child) {
+                        return Transform.rotate(
+                          angle: _rotationAnimation.value,  // -5도에서 5도 사이 회전
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),  // 둥근 모서리 적용
+                              image: DecorationImage(
+                                image: AssetImage(member.image ?? 'assets/images/갈매기.png'),
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   );
+
                 }).toList(),
               ),
           ),

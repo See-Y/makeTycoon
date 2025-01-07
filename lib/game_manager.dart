@@ -38,6 +38,16 @@ class GameManager {
     return potentialMembers;
   }
 
+  void reset(){
+    currentYear = 1; // 현재 년도 (초기값)
+    currentMonth = 1; // 현재 월 (1~12)
+    currentWeek = 1;  // 현재 주차 (1~4)
+    isMonthComplete = false; // 월간 주기 완료 여부
+    isGameOver = false; // 게임 종료 여부
+    membername= [];
+    availableMembers = [];
+  }
+
   List<Member> _generateNewMembers(BandProvider bandProvider) {
     // 가능성 있는 멤버 목록을 가져와
     List<Member> allPotentialMembers = _getAllPotentialMembers();

@@ -34,7 +34,7 @@ class MonthSummaryScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                '앨범으로 인한 결과',
+                '이번 달 수입과 지출',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Card(
@@ -42,7 +42,7 @@ class MonthSummaryScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                 child: ListTile(
                   title: Text(
-                    '고정 수입: ${band.albums.fold(0, (sum, album) => sum + album.monthlyIncome)}만 원',
+                    '고정 수입: ${band.albums.fold(0, (sum, album) => sum + album.monthlyIncome)}만 원\n월세 지출: ${bandProvider.calculateMonthlyRent()}만 원',
                     style: const TextStyle(fontSize: 14),
                   ),
                   subtitle: Text(
@@ -131,7 +131,10 @@ class MonthSummaryScreen extends StatelessWidget {
                 child: _buildCustomButton(context, '다음', () {
                   bandProvider.applyMonthlySummary();
                   MonthlyDataManager().resetMonthlyData();
-                  if (gameManager.isQuarterStart()) {
+                  if (bandProvider.band.money < 0) {
+                    Navigator.pushNamed(context, '/pasan-ending');
+                  }
+                  else if (gameManager.isQuarterStart()) {
                     Navigator.pushNamed(context, '/quarter-main');
                   } else {
                     Navigator.pushReplacementNamed(context, '/monthly-cycle');

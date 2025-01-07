@@ -67,15 +67,15 @@ class WeekPerformanceResultScreen extends StatelessWidget {
               Text("공연장: ${venue.name}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               success! >= 1.0 ?
-              Text("공연 성공!: $success")
-                  : Text("공연 폭망...: $success")
-              ,Text("총 관객 수: $audienceCount명"),
+              Text("공연 성공!: $success", style: const TextStyle(fontSize: 15))
+                  : Text("공연 폭망...: $success", style: const TextStyle(fontSize: 15))
+              ,Text("총 관객 수: $audienceCount명", style: const TextStyle(fontSize: 15)),
               fanChange! >= 0 ?
-                Text("팬 증가: ${fanChange > 0 ? '+$fanChange' : '없음'}")
-                  : Text("팬 감소: $fanChange명")
+                Text("팬 증가: ${fanChange > 0 ? '+$fanChange' : '없음'}", style: const TextStyle(fontSize: 15))
+                  : Text("팬 감소: $fanChange명", style: const TextStyle(fontSize: 15))
 
-              ,Text("총 수익: ${(revenue*10000).toStringAsFixed(0)} 원"),
-              Text("티켓 가격: ${(ticketPrice*10000).toStringAsFixed(0)} 원"),
+              ,Text("총 수익: ${(revenue*10000).toStringAsFixed(0)} 원", style: const TextStyle(fontSize: 15)),
+              Text("티켓 가격: ${(ticketPrice*10000).toStringAsFixed(0)} 원", style: const TextStyle(fontSize: 15)),
             ],
           ),
             const SizedBox(height: 10),

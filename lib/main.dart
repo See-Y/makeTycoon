@@ -23,6 +23,7 @@ import 'screens/week/week_performance_result_screen.dart';
 import 'screens/week/album_release_screen.dart';
 import 'screens/month/album_list_screen.dart';
 import 'package:make_tycoon/screens/month/member_level_up_screen.dart';
+import 'screens/month_summary/pasan_ending_screen.dart';
 
 
 void main() {
@@ -66,6 +67,7 @@ class BandSimulationApp extends StatelessWidget {
         '/member-removal': (context) => const MemberRemovalScreen(),
         '/member-recruitment': (context) => const MemberRecruitmentScreen(),
         '/leaderboard': (context) => LeaderboardScreen(),
+          '/pasan-ending': (context) => PasaNendingScreen(),
         }
       ),
     );

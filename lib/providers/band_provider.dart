@@ -216,11 +216,21 @@ class BandProvider with ChangeNotifier {
     int totalFanBoost = _band.albums.fold(0, (sum, album) => sum + album.fanBoost);
 
     _band.money += totalMonthlyIncome;
+    _band.money -=calculateMonthlyRent();
     _band.fans += totalFanBoost;
 
     notifyListeners();
   }
 
+  int calculateMonthlyRent(){
+    int rent = 10;
+    rent += _band.members.length * 5;
+    for (var member in _band.members){
+      rent += (member.level - 1) * 3;
+    }
+
+    return rent;
+  }
 
 
 

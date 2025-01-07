@@ -131,6 +131,16 @@ class MonthSummaryScreen extends StatelessWidget {
                 child: _buildCustomButton(context, '다음', () {
                   bandProvider.applyMonthlySummary();
                   MonthlyDataManager().resetMonthlyData();
+                  saveBandData(
+                    gameManager.token,
+                    band.name,
+                    band.fans,
+                    band.money,
+                    gameManager.currentYear,
+                    gameManager.currentMonth,
+                    gameManager.currentWeek,
+                    band.members
+                  );
                   if (gameManager.isQuarterStart()) {
                     Navigator.pushNamed(context, '/quarter-main');
                   } else {

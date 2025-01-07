@@ -17,7 +17,6 @@ class GameManager {
   int currentYear = 1; // 현재 년도 (초기값)
   int currentMonth = 1; // 현재 월 (1~12)
   int currentWeek = 1;  // 현재 주차 (1~4)
-  bool isMonthComplete = false; // 월간 주기 완료 여부
   bool isGameOver = false; // 게임 종료 여부
   List<String> membername= [];
   List<Member> availableMembers = [];
@@ -84,7 +83,6 @@ class GameManager {
   // 월 증가
   void incrementMonth() {
     currentMonth++;
-    isMonthComplete = false;
 
     if (currentMonth > 12) {
       currentMonth = 1;
@@ -110,7 +108,6 @@ class GameManager {
   // 주차 리셋
   void resetWeeklyCycle() {
     currentWeek = 1;
-    isMonthComplete = false;
   }
 
   // 현재 상태 반환

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:make_tycoon/client/load_game.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../game_manager.dart';
 import '../../logic/google_sign.dart';
 
 class GameStartScreen extends StatelessWidget {
@@ -36,12 +39,26 @@ class GameStartScreen extends StatelessWidget {
                       Navigator.pushNamed(context, '/band-name'); // 게임 시작 로직
                     }),
                     SizedBox(height: 16), // 버튼 사이 간격
+                    _buildCustomButton(context, '이어하기', () async {
+                      // 이어하기
+                      String? token = GameManager().token;
+                      final prefs = await SharedPreferences.getInstance();
+                      String? guestId = null;
+                      // 기존 guest_id가 있으면 반환
+                      if (prefs.containsKey('guest_id')) {
+                        guestId = prefs.getString('guest_id');
+                      }
+                      loadBandData(token, guestId, context);
+                      Navigator.pushNamed(context, '/monthly-cycle'); // 게임 시작 로직
+                    }),
+                    SizedBox(height: 16), // 버튼 사이 간격
                     _buildCustomButton(context, login?"이제 시작하세요!":"Google Login", () async {
-                  // 계속하기 버튼 클릭 시 실행할 함수
+                      // 계속하기 버튼 클릭 시 실행할 함수
                       final token = await signInWithGoogle();
                       if (token != null) {
                         login=true;
                         print('Google Sign-In successful. Token: $token');
+                        GameManager().token = token;
                       }
                     }),
                   ],

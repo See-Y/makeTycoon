@@ -1,4 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 import 'package:make_tycoon/game_manager.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -7,6 +8,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 );
 
 Future<String?> signInWithGoogle() async {
+  final Logger logger = Logger();
   try {
     // Google 계정 선택
     final GoogleSignInAccount? account = await _googleSignIn.signIn();
@@ -15,11 +17,11 @@ Future<String?> signInWithGoogle() async {
     final GoogleSignInAuthentication auth = await account!.authentication;
 
     // ID Token 반환 (서버에 전달)
-    print('Google Sign-In success!! ${auth.idToken}');
+    logger.i('Google Sign-In success!! ${auth.idToken}', "google-signin");
     GameManager().token = auth.idToken!;
     return auth.idToken;
   } catch (e) {
-    print('Google Sign-In failed: $e');
+    logger.i('Google Sign-In failed: $e', "google-signin");
     return null;
   }
 }

@@ -1,41 +1,68 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:make_tycoon/models/member.dart';
+import 'package:logger/logger.dart';
 
-Future<void> saveBandData(String token, int fanCount, int money, String leaderName, List<Member> members) async {
+import '../logic/user_manager.dart';
+import '../models/member.dart';
+
+Future<void> saveBandData(
+  String? token,
+  String bandName,
+  int fanCount,
+  int money,
+  int currentYear,
+  int currentMonth,
+  int currentWeek,
+  List<Member> members,
+) async {
   final url = Uri.parse('https://bandtycoonserver.onrender.com/api/bands');
+  final Logger logger = Logger();
+  final String guestId = await UserManager.getOrCreateGuestId();
 
+  // 유저 ID 결정 (Google ID Token 또는 익명 ID)
+  final String userId = token ?? guestId;
+
+  // 멤버 데이터를 맵 형태로 변환
   List<Map<String, dynamic>> memberData = members.map((member) {
     return {
       'name': member.name,
-      'instrument': member.instrument.name.toString(),
+      'instrument': {
+        'name': member.instrument.name,
+        'rarity': member.instrument.rarity,
+        'effects': member.instrument.effects,
+      },
       'level': member.level,
+      'stats': member.stats,
+      'mbti': member.mbti,
+      'approvalRatings': member.approvalRatings.map((key, value) => MapEntry(key.name, value)), // 수정된 부분
+      'isLeader': member.isLeader, // 추가된 부분
     };
   }).toList();
 
   try {
-    print('Sending POST request...');
+    // 서버로 POST 요청 전송
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'token': token,
-        'fan_count': fanCount,
+        'guest_id': token == null ? userId : null,
+        'name': bandName,
+        'fans': fanCount,
         'money': money,
-        'leader_name': leaderName,
+        'currentYear': currentYear,
+        'currentMonth': currentMonth,
+        'currentWeek': currentWeek,
         'members': memberData,
       }),
     );
 
-    print('Response received!');
-    print('Response: ${response.body}');
-
     if (response.statusCode == 200) {
-      print('Band data saved successfully');
+      logger.i('Band data saved successfully');
     } else {
-      print('Failed to save band data: ${response.body}');
+      logger.e('Failed to save band data: ${response.body}');
     }
   } catch (e) {
-    print('Error occurred while sending POST request: $e');
+    logger.e('Error occurred while sending POST request: $e');
   }
 }

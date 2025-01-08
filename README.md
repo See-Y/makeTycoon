@@ -15,3 +15,19 @@
 - 한 분기가 지나면 리더가 바뀌어요(**지지율, 선거** 기능)
 - 랜덤한 확률로 **돌발 상황**이 발생해요(지지율 변경 이벤트 기능)
 - 서버를 이용하여 다른 **유저들과의 리더보드 경쟁**이 가능해요(밴드 이름과 자금, 팬 수 등 표시)
+
+### Tech Stack
+
+---
+
+**Front-end** : Flutter
+
+**IDE** : Android Studio
+
+**Design** : Figma
+
+**Version Control** : GitHub
+
+**Server** : Node.js + express.js
+
+**DB** : POSTgreSQL

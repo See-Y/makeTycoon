@@ -224,9 +224,9 @@ class BandProvider with ChangeNotifier {
 
   int calculateMonthlyRent(){
     int rent = 10;
-    rent += _band.members.length * 5;
+    rent += _band.members.length * 10;
     for (var member in _band.members){
-      rent += (member.level - 1) * 3;
+      rent += (member.level - 1) * 20;
     }
 
     return rent;
@@ -236,14 +236,25 @@ class BandProvider with ChangeNotifier {
     Member leader= _band.members[0];
     int highestSupportSum = -9999;
 
+
     for (var member in _band.members){
-      int totalSupport = member.approvalRatings.values.reduce((a, b) => a + b);
+      final approvalRatings = band.members.where((otherMember) => otherMember != member)
+          .map((otherMember) {
+        final approvalValue = otherMember.approvalRatings[member] ?? 0.0;
+        return approvalValue;
+      }).toList();
+      int totalSupport = approvalRatings.reduce((a,b)=>a+b) as int;
+      print("total Support ${member.name}:$totalSupport");
       if(totalSupport > highestSupportSum){
         highestSupportSum = totalSupport;
         leader = member;
       }
     }
-    _band.leader=leader;
+    print("selectNewLeader called: ${_band.leader.name}");
+    _band.leader.isLeader=false;
+    leader.isLeader = true;
+    _band.leader = leader;
+    print("selectNewLeader changed: ${_band.leader.name}");
   }
 
   void updateLeaderApprovalRatings(bool isSuccess) {

@@ -86,8 +86,8 @@ class WeekPerformanceResultScreen extends StatelessWidget {
               Text("공연장: ${venue.name}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
               success! >= 1.0 ?
-              Text("공연 성공!: $success", style: const TextStyle(fontSize: 15))
-                  : Text("공연 폭망...: $success", style: const TextStyle(fontSize: 15))
+              Text("공연 성공!", style: const TextStyle(fontSize: 15))
+                  : Text("공연 폭망...", style: const TextStyle(fontSize: 15))
               ,Text("총 관객 수: $audienceCount명", style: const TextStyle(fontSize: 15)),
               fanChange! >= 0 ?
                 Text("팬 증가: ${fanChange > 0 ? '+$fanChange' : '없음'}", style: const TextStyle(fontSize: 15))

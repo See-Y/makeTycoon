@@ -47,7 +47,7 @@ class PerformanceLogic {
           : 0.0;
     }
     final random = Random();
-    final double randomValue = 0.3 + random.nextDouble();
+    final double randomValue = 0.1 + random.nextDouble();
 
     // 성공률 계산
     return randomValue * (1 + performanceBoost) + leaderEffect;
@@ -81,6 +81,6 @@ class PerformanceLogic {
     double failureRate = 1.0 - successRate;
 
     // 팬 감소량 계산
-    return -(currentFans * failureRate * 0.05).round();
+    return -(currentFans * failureRate * 0.5).round();
   }
 }

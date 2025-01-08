@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../client/band_recieve.dart';
-import '../../client/user_data_send.dart';
+import '../../client/leaderboard.dart'; // fetchLeaderboard() 함수가 정의된 파일
 
 class LeaderboardScreen extends StatefulWidget {
   @override
@@ -10,46 +9,114 @@ class LeaderboardScreen extends StatefulWidget {
 }
 
 class _LeaderboardScreenState extends State<LeaderboardScreen> {
-  late Future<List<dynamic>> leaderboard;
+  late Future<List<Map<String, dynamic>>?> leaderboardFuture;
 
-  final ScrollController _controller = ScrollController();
-
-  void _scrollToPosition(int index) {
-    final double position = index * 100.0; // 리스트 아이템 높이에 맞춤
-    _controller.animateTo(
-      position,
-      duration: Duration(seconds: 1),
-      curve: Curves.easeInOut,
-    );
+  @override
+  void initState() {
+    super.initState();
+    leaderboardFuture = fetchLeaderboard(); // 비동기 데이터 가져오기
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: fetchBandData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('No band data available');
-        } else {
-          final bands = snapshot.data!;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Leaderboard'),
+        automaticallyImplyLeading: false,
+      ),
+      body: FutureBuilder<List<Map<String, dynamic>>?>(
+        future: leaderboardFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // 데이터 로드 중
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            // 에러 발생
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(fontSize: 16, color: Colors.red),
+              ),
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // 데이터 없음
+            return Center(
+              child: Text(
+                'No leaderboard data available.',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            );
+          }
+
+          // 데이터 로드 완료
+          final leaderboardData = snapshot.data!;
+
           return ListView.builder(
-            itemCount: bands.length,
+            itemCount: leaderboardData.length,
             itemBuilder: (context, index) {
-              final band = bands[index];
-              return ListTile(
-                title: Text('${band['leader_name']} (${band['fan_count']} fans)'),
-                subtitle: Text('Money: ${band['money']}'),
+              final band = leaderboardData[index];
+
+              return Card(
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        band['band_name'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '리더: ${band['leader_name']}',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                      Text(
+                        '팬: ${band['fans']}명',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                      Text(
+                        '자산: ${band['money']}만 원',
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '멤버들:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: (band['members'] as List<dynamic>).map((member) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2.0),
+                            child: Text(
+                              '- ${member['name']} (Level: ${member['level']})',
+                              style: TextStyle(fontSize: 14, color: Colors.black87),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           );
-        }
-      },
+        },
+      ),
     );
   }
-
 }

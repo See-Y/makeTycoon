@@ -19,9 +19,9 @@ class QuarterMainScreen extends StatelessWidget {
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       ),
         body: PageView(
-          controller: PageController(initialPage:1),
+          controller: PageController(initialPage:0),
           children: [
-            MemberRemovalScreen(),
+            //MemberRemovalScreen(),
             _QuarterCycleMain(),
             MemberRecruitmentScreen(),
           ],

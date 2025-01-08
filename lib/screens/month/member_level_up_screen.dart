@@ -50,7 +50,7 @@ class _MemberLevelUpScreenState extends State<MemberLevelUpScreen> {
     return GlobalWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("레벨업"),
+          title: const Text("폐관 수련"),
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         ),
         body: Padding(
@@ -59,7 +59,7 @@ class _MemberLevelUpScreenState extends State<MemberLevelUpScreen> {
             children: [
               const SizedBox(height: 16),
               Text(
-                "레벨업!",
+                "멤버가 성장했습니다!",
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
               ),
               const SizedBox(height: 16),

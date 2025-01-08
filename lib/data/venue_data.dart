@@ -16,7 +16,7 @@ final List<Venue> venueData = [
     fee: 80,
     fanIncrease: 100,
     maxAudience: 200,
-    idealPrice: 2,
+    idealPrice: 1,
     description: "홍대의 인기 있는 라이브클럽입니다.",
   ),
   Venue(

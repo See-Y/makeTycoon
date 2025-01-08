@@ -1,8 +1,8 @@
 final List<int> memberLevelData = [
   0,
-  5,
-  10,
   30,
   100,
-  300
+  300,
+  1000,
+  3000
 ];

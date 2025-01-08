@@ -53,8 +53,8 @@ class InstrumentStatsScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text("멤버: ${member.name}"),
                       Text("희귀도: ${instrument.rarity}"),
-                      Text("공연 효과: ${instrument.effects['performanceBoost']}"),
-                      Text("음반 효과: ${instrument.effects['albumQualityBoost']}"),
+                      Text("공연 효과: ${instrument.effects['performanceBoost']!*100}%"),
+                      Text("음반 효과: ${instrument.effects['albumQualityBoost']!*100}%"),
                       const SizedBox(height: 16),
                       _buildCustomButton(context, '중고 거래 등록\n${instrumentEnhanceCosts[instrument.rarity]}만 원', () {
                           final message = bandProvider.enhanceInstrument(member, instrument);

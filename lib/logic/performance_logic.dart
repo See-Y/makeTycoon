@@ -47,7 +47,7 @@ class PerformanceLogic {
           : 0.0;
     }
     final random = Random();
-    final double randomValue = 0.2 + random.nextDouble() * (2.0 - 0.5);
+    final double randomValue = 0.3 + random.nextDouble();
 
     // 성공률 계산
     return randomValue * (1 + performanceBoost) + leaderEffect;
@@ -60,7 +60,7 @@ class PerformanceLogic {
     double gutsTotal = members.fold(0.0, (sum, member) => sum + member.stats[2]);
 
     // 수익 계산
-    return audienceCount.toInt() * ticketPrice * successRate * (1 + gutsTotal * 0.01);
+    return audienceCount.toInt() * ticketPrice * successRate * (1 + gutsTotal * 0.01)*0.5;
   }
 
   // 4. 팬 증가 계산

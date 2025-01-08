@@ -149,7 +149,7 @@ class _MemberCardState extends State<MemberCard> {
 
               // 레벨업 버튼
               Center(
-                child: _buildCustomButton(context, '레벨업 비용: ${nextLevelCost}만 원', () {
+                child: _buildCustomButton(context, '폐관 수련 비용: ${nextLevelCost}만 원', () {
                   // 계속하기 버튼 클릭 시 실행할 함수
                   if (band.money < nextLevelCost) {
                     // 돈 부족 알림

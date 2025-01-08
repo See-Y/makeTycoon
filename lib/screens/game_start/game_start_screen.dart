@@ -28,7 +28,7 @@ class GameStartScreen extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
               Positioned(
-                bottom: 50, // 화면 아래에서부터의 거리
+                //bottom: 50, // 화면 아래에서부터의 거리
                 left: MediaQuery.of(context).size.width * 0.125, // 가운데 정렬 (화면 너비의 1/8)
                 right: MediaQuery.of(context).size.width * 0.125,
                 child: Column(

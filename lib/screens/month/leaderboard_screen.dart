@@ -22,6 +22,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Leaderboard'),
+        automaticallyImplyLeading: false,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>?>(
         future: leaderboardFuture,
@@ -77,20 +78,20 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Leader: ${band['leader_name']}',
+                        '리더: ${band['leader_name']}',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                       Text(
-                        'Fans: ${band['fans']}',
+                        '팬: ${band['fans']}명',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                       Text(
-                        'Money: \$${band['money']}',
+                        '자산: ${band['money']}만 원',
                         style: TextStyle(fontSize: 16, color: Colors.black87),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Members:',
+                        '멤버들:',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

@@ -4,14 +4,25 @@ import '../../logic/monthly_data_manager.dart';
 import '../../game_manager.dart';
 import 'package:provider/provider.dart';
 import '../../providers/band_provider.dart';
+import 'package:make_tycoon/screens/week/randomevent_screen.dart';
+import 'dart:math';
 
 class WeekPerformanceResultScreen extends StatelessWidget {
   const WeekPerformanceResultScreen({super.key});
 
   void _onActivityComplete(BuildContext context) {
+    final bandProvider = Provider.of<BandProvider>(context, listen: false);
     final gameManager = GameManager();
-
-    if (gameManager.currentWeek < 4) {
+    Random random= Random();
+    if(random.nextBool()){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RandomEventScreen(members: bandProvider.band.members),
+        ),
+      );
+    }
+    else if (gameManager.currentWeek < 4) {
       // 다음 주차로 진행
       gameManager.incrementWeek();
       _navigateToNextWeek(context);

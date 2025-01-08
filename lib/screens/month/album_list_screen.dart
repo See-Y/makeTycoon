@@ -10,9 +10,12 @@ class AlbumListScreen extends StatelessWidget {
     final albums = bandProvider.band.albums;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('음반 목록'),
-        automaticallyImplyLeading: false,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.0),
+        child: AppBar(
+          title: const Text('음반 목록'),
+          automaticallyImplyLeading: false,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

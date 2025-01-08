@@ -93,8 +93,15 @@ class _MemberRecruitmentScreenState extends State<MemberRecruitmentScreen> {
                           children:[
                             ElevatedButton(
                               onPressed: () {
-                                GameManager().addMember(context, member);
-                                bandProvider.updateMoney(-50);
+                                if (bandProvider.band.money < 50) {
+                                  // 돈 부족 알림
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("돈이 부족합니다.")),
+                                  );
+                                } else {
+                                  GameManager().addMember(context, member);
+                                  bandProvider.updateMoney(-50);
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(

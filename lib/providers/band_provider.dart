@@ -213,7 +213,7 @@ class BandProvider with ChangeNotifier {
 
   void applyMonthlySummary() {
     int totalMonthlyIncome = _band.albums.fold(0, (sum, album) => sum + album.monthlyIncome);
-    int totalFanBoost = _band.albums.fold(0, (sum, album) => sum + album.fanBoost);
+    int totalFanBoost = _band.albums.isEmpty? 0 : _band.albums.last.fanBoost;
 
     _band.money += totalMonthlyIncome;
     _band.money -=calculateMonthlyRent();

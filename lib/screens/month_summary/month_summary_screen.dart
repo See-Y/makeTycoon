@@ -46,7 +46,7 @@ class MonthSummaryScreen extends StatelessWidget {
                     style: const TextStyle(fontSize: 14),
                   ),
                   subtitle: Text(
-                    '앨범으로 증가한 총 팬 수: ${band.albums.fold(0, (sum, album) => sum + album.fanBoost)}명',
+                    '앨범으로 증가한 총 팬 수: ${band.albums.isEmpty? 0 : band.albums.last.fanBoost}명',
                     style: const TextStyle(fontSize: 14),
                   ),
                 ),

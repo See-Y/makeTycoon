@@ -126,8 +126,8 @@ class _WeekPerformanceScreenState extends State<WeekPerformanceScreen> {
                 itemBuilder: (context, index) {
                   final venue = venueData[index];
                   final idealPrice = venue.idealPrice.toDouble();
-                  final minPrice = idealPrice * 0.1; // 슬라이더 최소값
-                  final maxPrice = idealPrice * 10; // 슬라이더 최대값
+                  final minPrice = idealPrice * 0.5; // 슬라이더 최소값
+                  final maxPrice = idealPrice * 2; // 슬라이더 최대값
 
                   return Padding(
                     padding: const EdgeInsets.all(16.0),

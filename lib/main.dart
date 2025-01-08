@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:make_tycoon/screens/month/album_list_screen.dart';
 import 'package:make_tycoon/screens/month/leaderboard_screen.dart';
+import 'package:make_tycoon/screens/week/randomevent_screen.dart';
 import 'game_manager.dart'; // GameManager 추가
 import 'package:provider/provider.dart';
 import 'providers/band_provider.dart';
@@ -23,6 +24,8 @@ import 'screens/week/week_performance_result_screen.dart';
 import 'screens/week/album_release_screen.dart';
 import 'screens/month/album_list_screen.dart';
 import 'package:make_tycoon/screens/month/member_level_up_screen.dart';
+import 'screens/month_summary/pasan_ending_screen.dart';
+import 'screens/week/randomevent_screen.dart';
 
 
 void main() {
@@ -66,6 +69,11 @@ class BandSimulationApp extends StatelessWidget {
         '/member-removal': (context) => const MemberRemovalScreen(),
         '/member-recruitment': (context) => const MemberRecruitmentScreen(),
         '/leaderboard': (context) => LeaderboardScreen(),
+          '/pasan-ending': (context) => PasaNendingScreen(),
+          '/randomevent': (context) {
+            final members = ModalRoute.of(context)!.settings.arguments as List<Member>;
+            return RandomEventScreen(members: members);
+          },
         }
       ),
     );

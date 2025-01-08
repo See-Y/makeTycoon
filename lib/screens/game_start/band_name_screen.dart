@@ -25,7 +25,7 @@ class BandNameScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              '세계적인 락스타가 될 밴드의 이름을 지어주세요!',
+              '세계적인 락스타가 될 밴드의\n이름을 지어주세요!',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
@@ -43,7 +43,9 @@ class BandNameScreen extends StatelessWidget {
               // 처음부터 버튼 클릭 시 실행할 함수
               final bandName = _nameController.text.trim();
               if (bandName.isNotEmpty) {
-                Provider.of<BandProvider>(context, listen: false).createInitialBand(bandName); // 새로운 Band 생성
+                final bandProvider = Provider.of<BandProvider>(context, listen: false);
+                GameManager().reset();
+                bandProvider.createInitialBand(bandName); // 새로운 Band 생성
                 GameManager().setavailableMember(context);
                 Navigator.pushNamed(context, '/monthly-cycle');
               } else {

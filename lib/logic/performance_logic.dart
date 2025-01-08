@@ -47,7 +47,7 @@ class PerformanceLogic {
           : 0.0;
     }
     final random = Random();
-    final double randomValue = 0.5 + random.nextDouble() * (2.0 - 0.5);
+    final double randomValue = 0.2 + random.nextDouble() * (2.0 - 0.5);
 
     // 성공률 계산
     return randomValue * (1 + performanceBoost) + leaderEffect;

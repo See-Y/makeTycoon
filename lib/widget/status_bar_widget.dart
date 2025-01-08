@@ -13,26 +13,36 @@ class StatusBar extends StatelessWidget {
     final fans = bandProvider.band.fans;
     final name = bandProvider.band.name;
 
-    return Container(
-      color: Colors.black, // StatusBar 배경 색상
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            name,
-            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
+    return Column(
+      children: [
+        SizedBox(
+            height: 15,
+            child: Container(
+              color: Colors.black,
+            ),
+        ),
+        Container(
+          color: Colors.black, // StatusBar 배경 색상
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
+              ),
+              Text(
+                '돈: $money만 원',
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
+              ),
+              Text(
+                '팬: $fans명',
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
+              ),
+            ],
           ),
-          Text(
-            '돈: $money만 원',
-            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
-          ),
-          Text(
-            '팬: $fans명',
-            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DungGeunMo'),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

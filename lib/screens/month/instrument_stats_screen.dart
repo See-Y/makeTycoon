@@ -46,7 +46,7 @@ class InstrumentStatsScreen extends StatelessWidget {
                       Text(
                         "악기: ${instrument.name}",
                         style: const TextStyle(
-                          fontSize: 28,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -91,14 +91,17 @@ class InstrumentStatsScreen extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,   // 텍스트 색상
-                fontSize: 15,          // 폰트 크기
-                fontWeight: FontWeight.bold, // 폰트 두께
-                fontFamily: 'DungGeunMo',  // 폰트 패밀리
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,   // 텍스트 색상
+                  fontSize: 15,          // 폰트 크기
+                  fontWeight: FontWeight.bold, // 폰트 두께
+                  fontFamily: 'DungGeunMo',  // 폰트 패밀리
+                ),
               ),
             ),
           ),

@@ -5,11 +5,12 @@ import 'package:make_tycoon/models/member.dart';
 import 'package:make_tycoon/models/instrument.dart';
 import 'package:provider/provider.dart';
 import '../game_manager.dart';
+import '../models/album.dart';
 
 /// 서버에서 받아온 데이터를 GameManager와 BandProvider에 적용하는 함수
 void applyLoadedData(BuildContext context, Map<String, dynamic> loadedData) {
   final gameManager = GameManager();
-  final bandProvider = Provider.of<BandProvider>(context);
+  final bandProvider = Provider.of<BandProvider>(context, listen: false);
 
   // 1. GameManager 업데이트
   gameManager.currentYear = loadedData['current_year'];
@@ -39,9 +40,24 @@ void applyLoadedData(BuildContext context, Map<String, dynamic> loadedData) {
       leaderEffect1: instrumentBindData["leaderEffect1"],
       leaderEffect2: instrumentBindData["leaderEffect2"],
       isLeader: memberData['is_leader'],
+      image: instrumentBindData["image"],
+      position: List<double>.from(instrumentBindData["position"]),
     );
   }).toList();
   bandProvider.band.members = members;
+
+  // Albums 업데이트
+  final albums = (loadedData['albums'] as List<dynamic>).map((albumData) {
+    print("almus: ${albumData['name']}");
+    return Album(
+      name: albumData['name'],
+      releaseDate: DateTime.parse(albumData['release_date']),
+      fanBoost: albumData['fan_boost'],
+      monthlyIncome: albumData['monthly_income'],
+      albumArt: albumData['album_art'],
+    );
+  }).toList();
+  bandProvider.band.albums = albums;
 
   // 리더 설정
   bandProvider.band.leader = bandProvider.band.members.firstWhere((member) => member.isLeader, orElse: () {

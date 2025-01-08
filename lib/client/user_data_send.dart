@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 import '../logic/user_manager.dart';
+import '../models/album.dart';
 import '../models/member.dart';
 
 Future<void> saveBandData(
@@ -14,6 +15,7 @@ Future<void> saveBandData(
   int currentMonth,
   int currentWeek,
   List<Member> members,
+  List<Album> albums,
 ) async {
   final url = Uri.parse('https://bandtycoonserver.onrender.com/api/bands');
   final Logger logger = Logger();
@@ -39,6 +41,16 @@ Future<void> saveBandData(
     };
   }).toList();
 
+  final List<Map<String, dynamic>> albumData = albums.map((album) {
+    return {
+      'name': album.name,
+      'releaseDate': album.releaseDate.toIso8601String(),
+      'fanBoost': album.fanBoost,
+      'monthlyIncome': album.monthlyIncome,
+      'albumArt': album.albumArt,
+    };
+  }).toList();
+
   try {
     // 서버로 POST 요청 전송
     final response = await http.post(
@@ -54,6 +66,7 @@ Future<void> saveBandData(
         'currentMonth': currentMonth,
         'currentWeek': currentWeek,
         'members': memberData,
+        'albums' :albumData,
       }),
     );
 

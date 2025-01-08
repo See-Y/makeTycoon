@@ -139,7 +139,8 @@ class MonthSummaryScreen extends StatelessWidget {
                     gameManager.currentYear,
                     gameManager.currentMonth,
                     gameManager.currentWeek,
-                    band.members
+                    band.members,
+                    band.albums,
                   );
                   if (gameManager.isQuarterStart()) {
                     Navigator.pushNamed(context, '/quarter-main');

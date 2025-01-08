@@ -12,7 +12,7 @@ void loadBandData(
   final url = Uri.parse(
       'https://bandtycoonserver.onrender.com/api/bands/load?token=$token&guest_id=$guestId');
   final Logger logger = Logger();
-
+  logger.i('Band $guestId');
   try {
     final response = await http.get(url);
 

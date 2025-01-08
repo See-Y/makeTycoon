@@ -44,15 +44,15 @@ class InstrumentEnhanceLogic {
       // 강화 성공
       instrument.rarity = _getNextRarity(rarity);
       instrument.updateEffects(); // 희귀도 변경 후 효과 업데이트
-      return "강화 성공! 희귀도: ${instrument.rarity}";
+      return "중고 거래가 성공했습니다! 희귀도: ${instrument.rarity}";
     } else if (rand < rates['success']! + rates['downgrade']!) {
       // 등급 하락
       instrument.rarity = _getPreviousRarity(rarity);
       instrument.updateEffects(); // 희귀도 변경 후 효과 업데이트
-      return "강화 실패로 등급 하락! 현재 희귀도: ${instrument.rarity}";
+      return "중고 거래 사기 당했습니다!ㅋㅋㅋㅋㅋㅋ 등급 하락! 현재 희귀도: ${instrument.rarity}";
     } else {
       // 강화 실패
-      return "강화 실패! 희귀도 유지: ${instrument.rarity}";
+      return "거래가 파토났습니다! 희귀도 유지: ${instrument.rarity}";
     }
   }
 

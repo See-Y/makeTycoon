@@ -18,11 +18,12 @@ class InstrumentStatsScreen extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(25.0),
           child: AppBar(
-            title: const Text('악기 스탯'),
+            title: const Text('악기 업그레이드 하기'),
             automaticallyImplyLeading: false,
           ),
         ),
         body: PageView.builder(
+          controller: PageController(viewportFraction: 0.5),
           scrollDirection: Axis.vertical, // 스크롤 방향을 세로로 변경
           itemCount: band.members.length,
           itemBuilder: (context, index) {
@@ -36,25 +37,26 @@ class InstrumentStatsScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  //padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "멤버: ${member.name}",
+                        "악기: ${instrument.name}",
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text("악기: ${instrument.name}"),
+                      Text("멤버: ${member.name}"),
                       Text("희귀도: ${instrument.rarity}"),
                       Text("공연 효과: ${instrument.effects['performanceBoost']}"),
                       Text("음반 효과: ${instrument.effects['albumQualityBoost']}"),
                       const SizedBox(height: 16),
-                      _buildCustomButton(context, '강화하기 : ${instrumentEnhanceCosts[instrument.rarity]}만 원', () {
+                      _buildCustomButton(context, '중고 거래 등록\n${instrumentEnhanceCosts[instrument.rarity]}만 원', () {
                           final message = bandProvider.enhanceInstrument(member, instrument);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(message)),
@@ -72,7 +74,7 @@ class InstrumentStatsScreen extends StatelessWidget {
   }
   Widget _buildCustomButton(BuildContext context, String label, VoidCallback onPressed) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5, // 화면의 3/4 너비
+      width: MediaQuery.of(context).size.width * 0.4, // 화면의 3/4 너비
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
@@ -91,6 +93,7 @@ class InstrumentStatsScreen extends StatelessWidget {
           child: Center(
             child: Text(
               label,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,   // 텍스트 색상
                 fontSize: 15,          // 폰트 크기

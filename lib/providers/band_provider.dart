@@ -93,7 +93,7 @@ class BandProvider with ChangeNotifier {
   void addMember(Member newMember) {
     ApprovalLogic.addApprovalForNewMember(newMember, _band.members);
     _band.members.add(newMember);
-    print("check addmember");
+    print("check addmember:");
     notifyListeners();
   }
 

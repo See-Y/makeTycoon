@@ -62,7 +62,7 @@ class _RandomEventScreenState extends State<RandomEventScreen> {
 
     return Event(
       name: "번지점프",
-      description: "우리 밴드가 익스트림 예능에 출연했습니다.\n멤버 한 명이 반드시 번지점프를 해야 한다면,\n누구를 시키시겠습니까?",
+      description: "우리 밴드가 익스트림 예능에 출연했습니다.\n멤버 한 명이 반드시 번지점프에 도전해야 한다면,\n누구를 시키시겠습니까?",
       imagePath: 'assets/images/번지점프.jpg',
       choices: ["${member1.name}", "${member2.name}"],
       resolveEvent: (choiceIndex) {
@@ -126,7 +126,7 @@ class _RandomEventScreenState extends State<RandomEventScreen> {
 
     return Event(
       name: "입합주",
-      description: "밴드가 입 합주를 하다가 보컬이 노래를\n못 하게 됐습니다.\n누구의 탓입니까?",
+      description: "밴드가 너무 열심히 합주를 하다가 보컬이 노래를\n못 하게 됐습니다.\n누구의 탓입니까?",
       imagePath: 'assets/images/입합주.png',
       choices: ["${member1.name}", "${member2.name}"],
       resolveEvent: (choiceIndex) {
